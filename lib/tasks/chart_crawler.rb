@@ -2,7 +2,6 @@
 require 'nokogiri'
 require 'open-uri'
 require 'tasks/code_crawler'
-require 'app/models/stock_codes'
 
 def crawl_all_chart
   #crawl_chart(code)
@@ -35,7 +34,7 @@ def crawl_chart (code = 000270, count = 10000)
   chartdata = doc.css("protocol chartdata")
 
   #chartdata[0].attributes.each do |key, value|
-  puts "#{key}, #{value}"
+  #puts "#{key}, #{value}"
   #end
 
   symbol = chartdata[0]["symbol"]

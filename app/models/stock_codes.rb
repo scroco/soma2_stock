@@ -4,5 +4,4 @@ class StockCodes < ActiveRecord::Base
   def self.duplicated? symbol
     self.where(:symbol => symbol).exists?
   end
-
 end
