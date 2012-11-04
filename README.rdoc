@@ -7,7 +7,7 @@
 lib/tasks/code_crawler.rb 
 lib/tasks/crawler.rake
 파일에 코드 있음
-4. rake crawler:day_candle - 데이터 수집기 실행. 
+5. rake crawler:day_candle - 데이터 수집기 실행. 
 lib/tasks/chart_crawler.rb
 lib/tasks/crawler.rake
 파일에 코드 있음
