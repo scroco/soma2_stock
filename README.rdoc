@@ -3,4 +3,11 @@
 1. bundle install - 필요한 라이브러리를 설치함
 2. rake db:create - 데이터베이스 생성
 3. rake db:migrate - 데이터베이스 마이그레이션 실행
-4. rake crawler:day_candle - 데이터 수집기 실행. lib/tasks/crawler.rake 파일에 코드 있음
+4. rake crawler:stock_codes - 종목 코드 수집기 실행. 
+lib/tasks/code_crawler.rb 
+lib/tasks/crawler.rake
+파일에 코드 있음
+4. rake crawler:day_candle - 데이터 수집기 실행. 
+lib/tasks/chart_crawler.rb
+lib/tasks/crawler.rake
+파일에 코드 있음
