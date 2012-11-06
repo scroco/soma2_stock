@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121102060024) do
+ActiveRecord::Schema.define(:version => 20121106172051) do
 
   create_table "day_candles", :force => true do |t|
     t.string   "symbol"
