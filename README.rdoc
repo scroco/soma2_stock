@@ -11,3 +11,5 @@ lib/tasks/crawler.rake
 lib/tasks/chart_crawler.rb
 lib/tasks/crawler.rake
 파일에 코드 있음
+
+태우 테스트
