@@ -5,5 +5,5 @@ class DayCandle < ActiveRecord::Base
     self.where(:symbol => symbol, :date => date).exists?
   end
 
-  has_many :stock_codes, :primary_key => :symbol, :foreign_key => :symbol
+  belongs_to :stock_codes, :primary_key => :symbol, :foreign_key => :symbol
 end
