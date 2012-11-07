@@ -5,5 +5,5 @@ class StockCode < ActiveRecord::Base
     self.where(:symbol => symbol).exists?
   end
 
-  has_many :day_candle, :primary_key => :symbol, :foreign_key => :symbol
+  has_many :day_candles, :primary_key => :symbol, :foreign_key => :symbol
 end
