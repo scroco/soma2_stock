@@ -37,7 +37,9 @@ def crawl_chart (code = 000270, count = 10000)
   #puts "#{key}, #{value}"
   #end
 
-  symbol = chartdata[0]["symbol"]
+  if chartdata[0]
+    symbol = chartdata[0]["symbol"]
+  end
 
   items = chartdata.css("item")
 
