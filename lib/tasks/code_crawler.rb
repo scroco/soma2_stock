@@ -84,9 +84,9 @@ end
 
 def store_code (issue_code, symbol, name, eng_name, standard_code, short_code, market_type)
   # attr_accessible :issue_code, :symbol, :name, :eng_name, :standard_code, :short_code, :market_type, :crawl_date
-  if !StockCodes.duplicated?(symbol)
+  if !StockCode.duplicated?(symbol)
     begin
-      StockCodes.create(:issue_code => issue_code, :symbol => symbol, :name => name, :eng_name => eng_name,
+      StockCode.create(:issue_code => issue_code, :symbol => symbol, :name => name, :eng_name => eng_name,
         :standard_code => standard_code, :short_code => short_code, :market_type => market_type)
     rescue
       puts $!

@@ -11,7 +11,7 @@ def crawl_all_chart
   #StockCodes.find(:all, :conditions => ["crawl_date < '#{(Time.now - 60*60*24).utc}' OR crawl_date IS NULL"]).each do |stock_code|
 
   #StockCodes.find(:all).each do |stock_code|
-  StockCodes.find(:all, :conditions => ["crawl_date IS NULL"]).each do |stock_code|
+  StockCode.find(:all, :conditions => ["crawl_date IS NULL"]).each do |stock_code|
     crawl_chart(stock_code[:symbol])
     # 60*60*24 : 1 day
 
