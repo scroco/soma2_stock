@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121106172051) do
+ActiveRecord::Schema.define(:version => 20121107153211) do
 
   create_table "day_candles", :force => true do |t|
     t.string   "symbol"
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(:version => 20121106172051) do
   end
 
   add_index "day_candles", ["date", "symbol"], :name => "index_day_candles_on_date_and_symbol", :unique => true
+  add_index "day_candles", ["symbol"], :name => "day_candles_symbol_fk"
 
   create_table "stock_codes", :force => true do |t|
     t.string   "issue_code"
@@ -41,5 +42,7 @@ ActiveRecord::Schema.define(:version => 20121106172051) do
   end
 
   add_index "stock_codes", ["symbol"], :name => "index_stock_codes_on_symbol", :unique => true
+
+  add_foreign_key "day_candles", "stock_codes", :name => "day_candles_symbol_fk", :column => "symbol", :primary_key => "symbol"
 
 end

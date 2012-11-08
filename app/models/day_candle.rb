@@ -4,4 +4,6 @@ class DayCandle < ActiveRecord::Base
   def self.duplicated? symbol, date
     self.where(:symbol => symbol, :date => date).exists?
   end
+
+  belongs_to :stock_codes, :primary_key => :symbol, :foreign_key => :symbol
 end

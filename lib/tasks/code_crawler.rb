@@ -9,7 +9,7 @@ def crawl_code ()
   pg_no = 1
 
   while true
-    doc = Nokogiri::XML(
+    doc = Nokogiri::HTML(
         open("http://isin.krx.co.kr/jsp/BA_LT131.jsp?pg_no=#{pg_no}"), nil, 'euc-kr')
 
     #table = doc.css("form input table table")
@@ -84,9 +84,9 @@ end
 
 def store_code (issue_code, symbol, name, eng_name, standard_code, short_code, market_type)
   # attr_accessible :issue_code, :symbol, :name, :eng_name, :standard_code, :short_code, :market_type, :crawl_date
-  if !StockCodes.duplicated?(symbol)
+  if !StockCode.duplicated?(symbol)
     begin
-      StockCodes.create(:issue_code => issue_code, :symbol => symbol, :name => name, :eng_name => eng_name,
+      StockCode.create(:issue_code => issue_code, :symbol => symbol, :name => name, :eng_name => eng_name,
         :standard_code => standard_code, :short_code => short_code, :market_type => market_type)
     rescue
       puts $!
@@ -94,5 +94,9 @@ def store_code (issue_code, symbol, name, eng_name, standard_code, short_code, m
     puts "#{symbol}, #{name}"
   else
     puts "Duplicated! #{symbol}, #{name}"
+    s = StockCode.where(:symbol => symbol).first
+    s[:name] = name
+    s[:eng_name] = eng_name
+    s.save
   end
 end
