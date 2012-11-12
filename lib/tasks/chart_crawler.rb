@@ -28,7 +28,7 @@ end
 def crawl_chart (code = 000270, count = 10000)
   puts "http://fchart.stock.naver.com/sise.nhn?symbol=#{code}&timeframe=day&count=#{count}&requestType=0"
   doc = Nokogiri::XML(
-      open("http://fchart.stock.naver.com/sise.nhn?symbol=#{code}&timeframe=day&count=#{count}&requestType=0").read, nil,
+      open("http://fchart.stock.naver.com/sise.nhn?symbol=#{code}&timeframe=day&count=#{count}&requestType=0"), nil,
       'euc-kr')
   chartdata = doc.css("protocol chartdata")
 
