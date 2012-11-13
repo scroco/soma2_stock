@@ -9,10 +9,10 @@ def crawl_firmdata ()
 
   cnt2=0
   StockCode.all().each do |stock_code|
-    cnt2 = cnt2+1
-    if cnt2 > 1 then
-      break
-    end
+    #cnt2 = cnt2+1
+    #if cnt2 > 1 then
+    #  break
+    #end
 
     cod = stock_code[:symbol]
     #cod = "005930"
@@ -332,8 +332,11 @@ def crawl_firmdata ()
 
 
     h.each { |key, value|
-      tup = value
-      puts "save #{key} : #{tup[:workingCapital]}"
+      #tup = value
+      #puts "save #{key} : #{tup}"
+      #puts tup.to_yaml
+      #puts '\n'
+
       puts tup.save!
     }
 
