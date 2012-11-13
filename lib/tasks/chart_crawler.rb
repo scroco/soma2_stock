@@ -4,25 +4,24 @@ require 'open-uri'
 require 'tasks/code_crawler'
 
 def crawl_all_chart
-  #crawl_chart(code)
-  #puts StockCodes.methods
 
-  #puts (Time.now - 60*60*24).utc
-  #StockCodes.find(:all, :conditions => ["crawl_date < '#{(Time.now - 60*60*24).utc}' OR crawl_date IS NULL"]).each do |stock_code|
+  # 하루가 지난 데이터는 필요한 양만큼 새로 받음
+  StockCode.where("crawl_date < ?", Time.now - 1.days).all.each do |stock_code|
+    term_secs = Time.now - stock_code['crawl_date'];
+    term_days = (term_secs / 1.days).round + 1
+    crawl_chart(stock_code[:symbol], term_days)
 
-  #StockCodes.find(:all).each do |stock_code|
-  StockCode.find(:all, :conditions => ["crawl_date IS NULL"]).each do |stock_code|
-    crawl_chart(stock_code[:symbol])
-    # 60*60*24 : 1 day
-
-
-    # TODO : add timestamp of crawling and compare before crawling
     stock_code['crawl_date'] = Time.now
-
-    #puts stock_code['id']
-    #stock_code['crawl_date'] = nil
     stock_code.save
+  end
 
+  # 처음 시작할 때는 모든 데이터를 모음
+  StockCode.where("crawl_date IS NULL").all.each do |stock_code|
+  #StockCode.find(:all, :conditions => ["crawl_date IS NULL"]).each do |stock_code|
+    crawl_chart(stock_code[:symbol])
+
+    stock_code['crawl_date'] = Time.now
+    stock_code.save
   end
 end
 

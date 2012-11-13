@@ -10,7 +10,7 @@ def crawl_code ()
 
   while true
     doc = Nokogiri::HTML(
-        open("http://isin.krx.co.kr/jsp/BA_LT131.jsp?pg_no=#{pg_no}"), nil, 'euc-kr')
+        open("http://isin.krx.co.kr/jsp/BA_LT131.jsp?pg_no=#{pg_no}").read, nil, 'euc-kr')
 
     #table = doc.css("form input table table")
 
