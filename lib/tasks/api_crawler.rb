@@ -41,62 +41,62 @@ end
 #한글 카테고리와 DB schema 매칭, 재무상태표
 def valuename_translator(ko, value, rec_value)
   if ko == "유동자산" then
-    rec_value[:workingCapital] = value
+    rec_value[:working_capital] = value
   elsif ko == "당좌자산" then
-    rec_value[:quickAssets] = value
+    rec_value[:quick_assets] = value
     #puts "#{ko} quickAssets #{value}"
   elsif ko == "재고자산" then
     rec_value[:inventories] = value
   elsif ko == "선급법인세" then
-    rec_value[:prepaidIncomeTaxes] = value
+    rec_value[:prepaid_income_taxes] = value
   elsif ko == "기타유동자산" then
-    rec_value[:otherCurrentAssets] = value
+    rec_value[:other_current_assets] = value
   elsif ko == "비유동자산" then
-    rec_value[:nonCurrentAssets] = value
+    rec_value[:non_current_assets] = value
   elsif ko == "투자자산" then
-    rec_value[:investmentAssets] = value
+    rec_value[:investment_assets] = value
   elsif ko == "유형자산" then
-    rec_value[:tangibleAssets] = value
+    rec_value[:tangible_assets] = value
   elsif ko == "무형자산" then
-    rec_value[:intangibleAssets] = value
+    rec_value[:intangible_assets] = value
   elsif ko == "생물자산" then
-    rec_value[:biologicalAssets] = value
+    rec_value[:biological_assets] = value
   elsif ko == "투자부동산" then
-    rec_value[:investmentRealAssets] = value
+    rec_value[:investment_real_assets] = value
   elsif ko == "매각예정자산" then
-    rec_value[:assetsHeldForSale] = value
+    rec_value[:assets_held_for_sale] = value
   elsif ko == "이연법인세자산" then
-    rec_value[:deferredIncomeTaxAssets] = value
+    rec_value[:deferred_income_tax_assets] = value
   elsif ko == "기타 비유동자산" then
-    rec_value[:otherNonCurrentAssets] = value
+    rec_value[:other_non_current_assets] = value
   elsif ko == "자산총계" then
-    rec_value[:totalAssets] = value
+    rec_value[:total_assets] = value
   elsif ko == "자산총계(지분법적용,주석)" then
-    rec_value[:totalAssetsUTEM] = value
+    rec_value[:total_assets_utem] = value
   elsif ko == "유동부채" then
-    rec_value[:floatingDebt] = value
+    rec_value[:floating_debt] = value
   elsif ko == "비유동부채" then
-    rec_value[:nonCurrentLiabilities] = value
+    rec_value[:non_current_liabilities] = value
   elsif ko == "부채총계" then
     rec_value[:liabilities] = value
   elsif ko == "부채총계(지분법적용,주석)" then
-    rec_value[:liabilitiesUTEM] = value
+    rec_value[:liabilities_utem] = value
   elsif ko == "지배주주지분" then
-    rec_value[:controllingShareHoldersEquity] = value
+    rec_value[:controlling_shareholders_equity] = value
   elsif ko == "자본금" then
     rec_value[:capital] = value
   elsif ko == "자본잉여금" then
-    rec_value[:capitalSurplus] = value
+    rec_value[:capital_surplus] = value
   elsif ko == "기타자본" then
-    rec_value[:otherCapital] = value
+    rec_value[:other_capital] = value
   elsif ko == "기타포괄이익누계액" then
-    rec_value[:accumulatedOtherComprehensiveIncome] = value
+    rec_value[:accumulated_other_comprehensive_income] = value
   elsif ko == "이익잉여금" then
-    rec_value[:retainedEarning] = value
+    rec_value[:retained_earning] = value
   elsif ko == "자본총계" then
-    rec_value[:totalStockholdersEquity] = value
+    rec_value[:total_stockholders_equity] = value
   elsif ko == "자본총계(지분법적용,주석)" then
-    rec_value[:totalStockholdersEquityUTEM] = value
+    rec_value[:total_stockholders_equity_utem] = value
   elsif ko == "BPS(Adj.,지분법적용,주석)" then
     rec_value[:bps] = value
   end
@@ -108,110 +108,86 @@ def valuename_translator2(ko, value, rec_value)
   if ko == "매출액(수익)" then
     rec_value[:sales] = value
   elsif ko == "매출원가" then
-    rec_value[:costOfGoodsSold] = value
+    rec_value[:cost_of_goods_sold] = value
   elsif ko == "매출총이익" then
-    rec_value[:grossProfit] = value
+    rec_value[:gross_profit] = value
   elsif ko == "판매비와관리비" then
-    rec_value[:sellingExpenses] = value
+    rec_value[:selling_expenses] = value
   elsif ko == "기타영업손익" then
-    rec_value[:otherOperationIncome] = value
+    rec_value[:other_operation_income] = value
   elsif ko == "기타영업수익" then
-    rec_value[:otherOperatingRevenue] = value
+    rec_value[:other_operating_revenue] = value
   elsif ko == "기타영업비용" then
-    rec_value[:otherOperationExpense] = value
+    rec_value[:other_operation_expense] = value
   elsif ko == "영업이익" then
-    rec_value[:operatingProfit] = value
+    rec_value[:operating_profit] = value
     #puts "#{ko} operatingProfit #{value}"
   elsif ko == "*영업이익(K-GAAP)" then
-    rec_value[:operatingProfitKgaap] = value
+    rec_value[:operating_profit_kgaap] = value
   elsif ko == "금융손익" then
-    rec_value[:financialIncome] = value
+    rec_value[:financial_income] = value
   elsif ko == "금융수익" then
-    rec_value[:financialRevenue] = value
+    rec_value[:financial_revenue] = value
   elsif ko == "금융비용" then
-    rec_value[:financialExpense] = value
+    rec_value[:financial_expense] = value
   elsif ko == "기타영업외손익" then
-    rec_value[:otherNonOperatingIncome] = value
+    rec_value[:other_non_operating_income] = value
   elsif ko == "기타수익" then
-    rec_value[:otherIncome] = value
+    rec_value[:other_income] = value
   elsif ko == "기타비용" then
-    rec_value[:otherCosts] = value
+    rec_value[:other_costs] = value
   elsif ko == "종속기업관련손익" then
-    rec_value[:subsidiariesIncome] = value
+    rec_value[:subsidiaries_income] = value
   elsif ko == "법인세비용차감전계속사업이익" then
-    rec_value[:profitBeforeIncomeTax] = value
+    rec_value[:profit_before_income_tax] = value
   elsif ko == "법인세비용" then
-    rec_value[:incomeTax] = value
+    rec_value[:income_tax] = value
   elsif ko == "당기순이익" then
-    rec_value[:netIncome] = value
+    rec_value[:net_income] = value
   elsif ko == "지배지분 순이익" then
-    rec_value[:controllingInterestsInNetIncome] = value
+    rec_value[:controlling_interests_in_net_income] = value
   elsif ko == "비지배지분 순이익" then
-    rec_value[:nonControllingInterestInNetIncome] = value
+    rec_value[:non_controlling_interest_in_net_income] = value
   elsif ko == "*지배지분 연결순이익" then
-    rec_value[:consolidatedNetControllingStake] = value
+    rec_value[:consolidated_net_controlling_stake] = value
   elsif ko == "당기순이익(지분법적용,주석)" then
-    rec_value[:netIncomeUTEM] = value
+    rec_value[:net_income_utem] = value
   elsif ko == "기타포괄이익" then
-    rec_value[:otherComprehensiveIncome] = value
+    rec_value[:other_comprehensive_income] = value
   elsif ko == "총포괄이익" then
-    rec_value[:totalComprehensiveIncome] = value
+    rec_value[:total_comprehensive_income] = value
   end
 
 end
 
 def valuename_translator3(ko, value, rec_value)
-  if ko == "매출액(수익)" then
-    rec_value[:sales] = value
+  if ko == "영업활동으로인한현금흐름" then
+    rec_value[:cashflows_from_operating] = value
     #puts "#{ko} operatingProfit #{value}"
-  elsif ko == "매출원가" then
-    rec_value[:costOfGoodsSold] = value
-  elsif ko == "매출총이익" then
-    rec_value[:grossProfit] = value
-  elsif ko == "판매비와관리비" then
-    rec_value[:sellingExpenses] = value
-  elsif ko == "기타영업손익" then
-    rec_value[:otherOperationIncome] = value
-  elsif ko == "기타영업수익" then
-    rec_value[:otherOperatingRevenue] = value
-  elsif ko == "기타영업비용" then
-    rec_value[:otherOperationExpense] = value
-  elsif ko == "영업이익" then
-    rec_value[:operatingProfit] = value
-  elsif ko == "*영업이익(K-GAAP)" then
-    rec_value[:operatingProfitKgaap] = value
-  elsif ko == "금융손익" then
-    rec_value[:financialIncome] = value
-  elsif ko == "금융수익" then
-    rec_value[:financialRevenue] = value
-  elsif ko == "금융비용" then
-    rec_value[:financialExpense] = value
-  elsif ko == "기타영업외손익" then
-    rec_value[:otherNonOperatingIncome] = value
-  elsif ko == "기타수익" then
-    rec_value[:otherIncome] = value
-  elsif ko == "기타비용" then
-    rec_value[:otherCosts] = value
-  elsif ko == "종속기업관련손익" then
-    rec_value[:subsidiariesIncome] = value
-  elsif ko == "법인세비용차감전계속사업이익" then
-    rec_value[:profitBeforeIncomeTax] = value
-  elsif ko == "법인세비용" then
-    rec_value[:incomeTax] = value
-  elsif ko == "당기순이익" then
-    rec_value[:netIncome] = value
-  elsif ko == "지배지분 순이익" then
-    rec_value[:controllingInterestsInNetIncome] = value
-  elsif ko == "비지배지분 순이익" then
-    rec_value[:nonControllingInterestInNetIncome] = value
-  elsif ko == "*지배지분 연결순이익" then
-    rec_value[:consolidatedNetControllingStake] = value
-  elsif ko == "당기순이익(지분법적용,주석)" then
-    rec_value[:netIncomeUTEM] = value
-  elsif ko == "기타포괄이익" then
-    rec_value[:otherComprehensiveIncome] = value
-  elsif ko == "총포괄이익" then
-    rec_value[:totalComprehensiveIncome] = value
+  elsif ko == "현금유출이 없는 비용" then
+    rec_value[:expenses_without_cash_outflow] = value
+  elsif ko == "현금유입이 없는 수익" then
+    rec_value[:income_without_cash_inflow] = value
+  elsif ko == "영업자산·부채 변동" then
+    rec_value[:operating_assets_liabilities_fluctuations] = value
+  elsif ko == "투자활동으로인한현금흐름" then
+    rec_value[:cashflow_from_investing] = value
+  elsif ko == "투자활동현금유입액" then
+    rec_value[:cash_inflow_from_investing] = value
+  elsif ko == "투자활동현금유출액" then
+    rec_value[:cash_outflow_from_investing] = value
+  elsif ko == "재무활동으로인한현금흐름" then
+    rec_value[:cashflow_from_financing] = value
+  elsif ko == "재무활동현금유입액" then
+    rec_value[:cash_inflow_from_financing] = value
+  elsif ko == "재무활동현금유출액" then
+    rec_value[:cash_outflow_from_financing] = value
+  elsif ko == "현금의 증감" then
+    rec_value[:change_in_cash] = value
+  elsif ko == "기초의 현금" then
+    rec_value[:beginning_cash] = value
+  elsif ko == "기말의 현금" then
+    rec_value[:end_cash] = value
   end
 
 end

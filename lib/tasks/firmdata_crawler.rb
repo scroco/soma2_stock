@@ -251,13 +251,13 @@ def crawl_firmdata ()
         tup[:eps] = strtoint(veps[cnt])
       end
       if vepsUTEM[cnt] != "N/A"
-        tup[:epsUTEM] = strtoint(vepsUTEM[cnt])
+        tup[:eps_utem] = strtoint(vepsUTEM[cnt])
       end
       if vper[cnt] != "N/A"
         tup[:per] = strtoint(vper[cnt])
       end
       if vbpsUTEM[cnt] != "N/A"
-        tup[:bpsUTEM] = strtoint(vbpsUTEM[cnt])
+        tup[:bps_utem] = strtoint(vbpsUTEM[cnt])
       end
       if vpbr[cnt] != "N/A"
         tup[:pbr] = strtoint(vpbr[cnt])
@@ -290,37 +290,37 @@ def crawl_firmdata ()
         tup[:roa] = strtoint(vroa[cnt])
       end
       if vnetProfitMargin[cnt] != "N/A"
-        tup[:netProfitMargin] = strtoint(vnetProfitMargin[cnt])
+        tup[:net_profit_margin] = strtoint(vnetProfitMargin[cnt])
       end
       if voperatingProfitMarginGAAP[cnt] != "N/A"
-        tup[:operatingProfitMarginGAAP] = strtoint(voperatingProfitMarginGAAP[cnt])
+        tup[:net_profit_margin_gaap] = strtoint(voperatingProfitMarginGAAP[cnt])
       end
       if voperatingProfitMargin[cnt] != "N/A"
-        tup[:operatingProfitMargin] = strtoint(voperatingProfitMargin[cnt])
+        tup[:operating_profit_margin] = strtoint(voperatingProfitMargin[cnt])
       end
       if vsalesGrowth[cnt] != "N/A"
-        tup[:salesGrowth] = strtoint(vsalesGrowth[cnt])
+        tup[:sales_growth] = strtoint(vsalesGrowth[cnt])
       end
       if voperatingProfitGrowthGAAP[cnt] != "N/A"
-        tup[:operatingProfitGrowthGAAP] = strtoint(voperatingProfitGrowthGAAP[cnt])
+        tup[:operating_profit_growth_gaap] = strtoint(voperatingProfitGrowthGAAP[cnt])
       end
       if voperatingProfitGrowth[cnt] != "N/A"
-        tup[:operatingProfitGrowth] = strtoint(voperatingProfitGrowth[cnt])
+        tup[:operating_profit_growth] = strtoint(voperatingProfitGrowth[cnt])
       end
       if vnetProfitGrowth[cnt] != "N/A"
-        tup[:netProfitGrowth] = strtoint(vnetProfitGrowth[cnt])
+        tup[:net_profit_growth] = strtoint(vnetProfitGrowth[cnt])
       end
       if vequityGrowth[cnt] != "N/A"
-        tup[:equityGrowth] = strtoint(vequityGrowth[cnt])
+        tup[:equity_growth] = strtoint(vequityGrowth[cnt])
       end
       if vdebtToEquityRatio[cnt] != "N/A"
-        tup[:debtToEquityRatio] = strtoint(vdebtToEquityRatio[cnt])
+        tup[:debt_to_equity_ratio] = strtoint(vdebtToEquityRatio[cnt])
       end
       if vcurrentRatio[cnt] != "N/A"
-        tup[:currentRatio] = strtoint(vcurrentRatio[cnt])
+        tup[:current_ratio] = strtoint(vcurrentRatio[cnt])
       end
       if vInterestCoverageRatio[cnt] != "N/A"
-        tup[:InterestCoverageRatio] = strtoint(vInterestCoverageRatio[cnt])
+        tup[:interest_coverage_ratio] = strtoint(vInterestCoverageRatio[cnt])
       end
 
       #if voperatingProfitGrowth[cnt] != "N/A"
