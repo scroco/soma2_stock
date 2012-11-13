@@ -1,4 +1,4 @@
-class FirmData < ActiveRecord::Base
+class FirmDatum < ActiveRecord::Base
   attr_accessible :date, :period, :workingCapital, :quickAssets, :inventories,
                   :prepaidIncomeTaxes, :otherCurrentAssets, :nonCurrentAssets, :investmentAssets,
                   :tangibleAssets, :intangibleAssets, :biologicalAssets, :investmentRealAssets,
@@ -29,4 +29,5 @@ class FirmData < ActiveRecord::Base
                   :stock_code
 
   belongs_to :stock_code
+
 end

@@ -50,8 +50,8 @@ def crawl_firmdata ()
         end
 
         if h[tmp_date] == nil then
-          #[tmp_date] = stock_code.build_FirmData
-          h[tmp_date] = FirmData.new(:stock_code => stock_code)
+          #[tmp_date] = stock_code.build_FirmDatum
+          h[tmp_date] = FirmDatum.new(:stock_code => stock_code)
           h[tmp_date][:date] = Date.strptime(tmp_date, '%Y.%m')
         end
 
@@ -95,8 +95,8 @@ def crawl_firmdata ()
         end
 
         if h[tmp_date] == nil then
-          #[tmp_date] = stock_code.build_FirmData
-          h[tmp_date] = FirmData.new(:stock_code => stock_code)
+          #[tmp_date] = stock_code.build_FirmDatum
+          h[tmp_date] = FirmDatum.new(:stock_code => stock_code)
           h[tmp_date][:date] = Date.strptime(tmp_date, '%Y.%m')
         end
 
@@ -139,8 +139,8 @@ def crawl_firmdata ()
 
         tup = h[tmp_date]
         if tup == nil then
-          #[tmp_date] = stock_code.build_FirmData
-          tup = FirmData.new(:stock_code => stock_code)
+          #[tmp_date] = stock_code.build_FirmDatum
+          tup = FirmDatum.new(:stock_code => stock_code)
           tup[:date] = Date.strptime(tmp_date, '%Y.%m')
         end
         valuename_translator3(tmp_name, strtoint(value), tup)
@@ -238,8 +238,8 @@ def crawl_firmdata ()
     cnt = 0
     for tmp in date do
       if h[tmp] == nil then
-        #[tmp_date] = stock_code.build_FirmData
-        h[tmp] = FirmData.new(:stock_code => stock_code)
+        #[tmp_date] = stock_code.build_FirmDatum
+        h[tmp] = FirmDatum.new(:stock_code => stock_code)
       end
 
       tup = h[tmp]
@@ -339,7 +339,7 @@ def crawl_firmdata ()
 
   end
 
-  #puts FirmData.all()
+  #puts FirmDatum.all()
 
 end
 

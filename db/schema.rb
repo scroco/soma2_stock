@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121108161520) do
+ActiveRecord::Schema.define(:version => 20121113065919) do
 
   create_table "day_candles", :force => true do |t|
     t.string   "symbol"
@@ -125,6 +125,7 @@ ActiveRecord::Schema.define(:version => 20121108161520) do
     t.float    "InterestCoverageRatio"
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
+    t.integer  "stock_code_id"
   end
 
   create_table "stock_codes", :force => true do |t|
