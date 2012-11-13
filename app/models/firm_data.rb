@@ -14,8 +14,19 @@ class FirmData < ActiveRecord::Base
                   :otherIncome, :otherCosts, :subsidiariesIncome, :profitBeforeIncomeTax, :incomeTax,
                   :netIncome, :controllingInterestsInNetIncome, :nonControllingInterestInNetIncome,
                   :consolidatedNetControllingStake, :netIncomeUTEM, :otherComprehensiveIncome,
-                  :totalComprehensiveIncome
+                  :totalComprehensiveIncome,
 
+                  :cashflowsFromOperating, :expensesWithoutCashOutflow, :incomeWithoutCashInflow,
+                  :operatingAssetsLiabilitiesFluctuations, :cashflowFromInvesting, :cashInflowFromInvesting,
+                  :cashOutflowFromInvesting, :cashflowFromFinancing, :cashInflowFromFinancing,
+                  :cashOutflowFromFinancing, :changeInCash, :beginningCash, :endCash,
 
-  belongs_to :StockCode, :class_name => "StockCode"
+                  :eps, :epsUTEM, :per, :bpsUTEM, :pbr, :cfps, :pcr, :sps, :psr, :roe, :ros, :sa, :ae,
+                  :roa, :netProfitMargin, :netProfitMarginGAAP, :operatingProfitMargin, :salesGrowth,
+                  :operatingProfitGrowthGAAP, :operatingProfitGrowth, :netProfitGrowth,
+                  :equityGrowth, :debtToEquityRatio, :currentRatio, :InterestCoverageRatio,
+
+                  :stock_code
+
+  belongs_to :stock_code
 end
