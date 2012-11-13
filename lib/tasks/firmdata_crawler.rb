@@ -15,10 +15,12 @@ def crawl_firmdata ()
     end
 
     cod = stock_code[:symbol]
+    #cod = "005930"
     puts cod
 
     h = Hash.new
 
+    puts "재무상태표"
     #재무상태표
     doc = Nokogiri::HTML(open("http://www.itooza.com/vclub/y10_page.php?cmp_cd=#{cod}&mode=db&ss=10&sv=1"))
 
@@ -48,17 +50,19 @@ def crawl_firmdata ()
         end
 
         if h[tmp_date] == nil then
-          h[tmp_date] = FirmData.new
-          #tup = stock_code.build_FirmData
+          #[tmp_date] = stock_code.build_FirmData
+          h[tmp_date] = FirmData.new(:stock_code => stock_code)
+          h[tmp_date][:date] = Date.strptime(tmp_date, '%Y.%m')
         end
 
-        tup = h[tmp_date]
-        valuename_translator(tmp_name, strtoint(value), tup)
-        tup[:date] = Date.strptime(tmp_date, '%Y.%m')
+        valuename_translator(tmp_name, strtoint(value), h[tmp_date])
 
       end
     end
 
+
+
+    puts "손익계산서"
     #손익계산서
     doc = Nokogiri::HTML(open("http://www.itooza.com/vclub/y10_page.php?cmp_cd=#{cod}&mode=db&ss=10&sv=2&lsmode=1&lkmode=2&accmode=1"))
 
@@ -74,8 +78,8 @@ def crawl_firmdata ()
     #puts valuelist
     #valuelist.delete_at(0) #쓰레기 값 제거
 
-    puts valuelist[0]
-    puts valuelist[1]
+    #puts valuelist[0]
+    #puts valuelist[1]
 
     cnt=0
     for tmp_name in namelist do
@@ -91,26 +95,252 @@ def crawl_firmdata ()
         end
 
         if h[tmp_date] == nil then
-          h[tmp_date] = FirmData.new
-          #tup = stock_code.build_FirmData
+          #[tmp_date] = stock_code.build_FirmData
+          h[tmp_date] = FirmData.new(:stock_code => stock_code)
+          h[tmp_date][:date] = Date.strptime(tmp_date, '%Y.%m')
         end
 
-        tup = h[tmp_date]
-        valuename_translator2(tmp_name, strtoint(value), tup)
-        tup[:date] = Date.strptime(tmp_date, '%Y.%m')
+        valuename_translator2(tmp_name, strtoint(value), h[tmp_date])
 
       end
     end
 
 
-    #h.each { |key, value|
-    #  tup = value
-    #  puts "#{key} : #{tup[:workingCapital]}"
-    ## tup.save
-    #}
+    puts "현금흐름표"
+    #현금흐름표
+    doc = Nokogiri::HTML(open("http://www.itooza.com/vclub/y10_page.php?cmp_cd=#{cod}&mode=db&ss=10&sv=4&lsmode=1&lkmode=2&accmode=1"))
 
+    nameTable = doc.css("table#y10_tb_1")
+    namelist = get_data(nameTable, "tr th")
+    namelist.delete_at(0) #쓰레기 값 제거
+
+    docTable = doc.css("table#y10_tb_2")
+    #puts docTable
+
+    date = get_data(docTable, "thead tr th span")
+    valuelist = get_data(docTable, "tbody tr td")
+    #puts valuelist
+    if valuelist[0] == "" then
+      valuelist.delete_at(0) #쓰레기 값 제거
+    end
+
+    cnt=0
+    for tmp_name in namelist do
+      #puts tmp_name
+      for tmp_date in date do
+
+        value = valuelist[cnt]
+        cnt = cnt+1
+        #puts value
+
+        if value == "N/A" or value == nil then
+          next
+        end
+
+        tup = h[tmp_date]
+        if tup == nil then
+          #[tmp_date] = stock_code.build_FirmData
+          tup = FirmData.new(:stock_code => stock_code)
+          tup[:date] = Date.strptime(tmp_date, '%Y.%m')
+        end
+        valuename_translator3(tmp_name, strtoint(value), tup)
+
+      end
+
+    end
+
+    puts "가치평가"
+    #가치평가
+    doc = Nokogiri::HTML(open("http://www.itooza.com/vclub/y10_page.php?ss=10&sv=10&cmp_cd=#{cod}&mode=db"))
+
+    docTable = doc.css("table#y10_tb_1")
+    #puts docTable
+
+    #기간
+    date = get_data(docTable, "thead tr th span")
+    #puts date
+
+    #EPS(지배)
+    veps = get_data(docTable, "tbody tr#node-2 td")
+
+    #EPS지분법적용
+    vepsUTEM = get_data(docTable, "tr#node-3 td")
+
+    #PER
+    vper = get_data(docTable, "tr#node-4 td")
+
+    #BPS지분법적용
+    vbpsUTEM = get_data(docTable, "tr#node-5 td")
+
+    #PBR
+    vpbr = get_data(docTable, "tr#node-6 td")
+
+    #CFPS
+    vcfps = get_data(docTable, "tr#node-7 td")
+
+    #PCR
+    vpcr = get_data(docTable, "tr#node-8 td")
+
+    #SPS
+    vsps = get_data(docTable, "tr#node-9 td")
+
+    #PSR
+    vpsr = get_data(docTable, "tr#node-10 td")
+
+    #ROE
+    vroe = get_data(docTable, "tr#node-12 td")
+
+    #ROS
+    vros = get_data(docTable, "tr#node-13 td")
+
+    #SA
+    vsa = get_data(docTable, "tr#node-14 td")
+
+    #AE
+    vae = get_data(docTable, "tr#node-15 td")
+
+    #ROA
+    vroa = get_data(docTable, "tr#node-16 td")
+
+    #매출액순이익률
+    vnetProfitMargin = get_data(docTable, "tr#node-17 td")
+
+    #매출액영업이익률(GAAP)
+    voperatingProfitMarginGAAP = get_data(docTable, "tr#node-18 td")
+
+    #매출액영업이익률(보고서)
+    voperatingProfitMargin = get_data(docTable, "tr#node-19 td")
+
+    #매출액증가율
+    vsalesGrowth = get_data(docTable, "tr#node-21 td")
+
+    #영업이익증가율(GAAP)
+    voperatingProfitGrowthGAAP = get_data(docTable, "tr#node-22 td")
+
+    #영업이익증가율(보고서)
+    voperatingProfitGrowth = get_data(docTable, "tr#node-23 td")
+
+    #순이익증가율(지배)
+    vnetProfitGrowth = get_data(docTable, "tr#node-24 td")
+
+    #자기자본증가율(지배)
+    vequityGrowth = get_data(docTable, "tr#node-25 td")
+
+    #부채비율(%)
+    vdebtToEquityRatio = get_data(docTable, "tr#node-27 td")
+
+    #유동비율(%)
+    vcurrentRatio = get_data(docTable, "tr#node-28 td")
+
+    #이자보상배율(배)
+    vInterestCoverageRatio = get_data(docTable, "tr#node-29 td")
+
+    cnt = 0
+    for tmp in date do
+      if h[tmp] == nil then
+        #[tmp_date] = stock_code.build_FirmData
+        h[tmp] = FirmData.new(:stock_code => stock_code)
+      end
+
+      tup = h[tmp]
+      #valuename_translator2(tmp_name, strtoint(value), tup)
+      tup[:date] = Date.strptime(tmp_date, '%Y.%m')
+
+
+      if veps[cnt] != "N/A"
+        tup[:eps] = strtoint(veps[cnt])
+      end
+      if vepsUTEM[cnt] != "N/A"
+        tup[:epsUTEM] = strtoint(vepsUTEM[cnt])
+      end
+      if vper[cnt] != "N/A"
+        tup[:per] = strtoint(vper[cnt])
+      end
+      if vbpsUTEM[cnt] != "N/A"
+        tup[:bpsUTEM] = strtoint(vbpsUTEM[cnt])
+      end
+      if vpbr[cnt] != "N/A"
+        tup[:pbr] = strtoint(vpbr[cnt])
+      end
+      if vcfps[cnt] != "N/A"
+        tup[:cfps] = strtoint(vcfps[cnt])
+      end
+      if vpcr[cnt] != "N/A"
+        tup[:pcr] = strtoint(vpcr[cnt])
+      end
+      if vsps[cnt] != "N/A"
+        tup[:sps] = strtoint(vsps[cnt])
+      end
+      if vpsr[cnt] != "N/A"
+        tup[:psr] = strtoint(vpsr[cnt])
+      end
+      if vroe[cnt] != "N/A"
+        tup[:roe] = strtoint(vroe[cnt])
+      end
+      if vros[cnt] != "N/A"
+        tup[:ros] = strtoint(vros[cnt])
+      end
+      if vsa[cnt] != "N/A"
+        tup[:sa] = strtoint(vsa[cnt])
+      end
+      if vae[cnt] != "N/A"
+        tup[:ae] = strtoint(vae[cnt])
+      end
+      if vroa[cnt] != "N/A"
+        tup[:roa] = strtoint(vroa[cnt])
+      end
+      if vnetProfitMargin[cnt] != "N/A"
+        tup[:netProfitMargin] = strtoint(vnetProfitMargin[cnt])
+      end
+      if voperatingProfitMarginGAAP[cnt] != "N/A"
+        tup[:operatingProfitMarginGAAP] = strtoint(voperatingProfitMarginGAAP[cnt])
+      end
+      if voperatingProfitMargin[cnt] != "N/A"
+        tup[:operatingProfitMargin] = strtoint(voperatingProfitMargin[cnt])
+      end
+      if vsalesGrowth[cnt] != "N/A"
+        tup[:salesGrowth] = strtoint(vsalesGrowth[cnt])
+      end
+      if voperatingProfitGrowthGAAP[cnt] != "N/A"
+        tup[:operatingProfitGrowthGAAP] = strtoint(voperatingProfitGrowthGAAP[cnt])
+      end
+      if voperatingProfitGrowth[cnt] != "N/A"
+        tup[:operatingProfitGrowth] = strtoint(voperatingProfitGrowth[cnt])
+      end
+      if vnetProfitGrowth[cnt] != "N/A"
+        tup[:netProfitGrowth] = strtoint(vnetProfitGrowth[cnt])
+      end
+      if vequityGrowth[cnt] != "N/A"
+        tup[:equityGrowth] = strtoint(vequityGrowth[cnt])
+      end
+      if vdebtToEquityRatio[cnt] != "N/A"
+        tup[:debtToEquityRatio] = strtoint(vdebtToEquityRatio[cnt])
+      end
+      if vcurrentRatio[cnt] != "N/A"
+        tup[:currentRatio] = strtoint(vcurrentRatio[cnt])
+      end
+      if vInterestCoverageRatio[cnt] != "N/A"
+        tup[:InterestCoverageRatio] = strtoint(vInterestCoverageRatio[cnt])
+      end
+
+      #if voperatingProfitGrowth[cnt] != "N/A"
+      #  puts "#{cod}, operatingProfitGrowth, #{strtoint(voperatingProfitGrowth[cnt])}, #{Date.strptime(tmp, '%Y.%m')}, db"
+      #end
+
+      cnt = cnt+1
+    end
+
+
+    h.each { |key, value|
+      tup = value
+      puts "save #{key} : #{tup[:workingCapital]}"
+      puts tup.save!
+    }
 
   end
+
+  #puts FirmData.all()
+
 end
 
 #전체 값의 한글 이름을 가져오는 함수

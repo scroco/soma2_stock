@@ -1,6 +1,11 @@
 # coding: utf-8
 require 'rubygems'
 
+#camulcase -> snakecase  :: converting camucase to underscore in ruby
+def to_snake_case(str)
+  return downcase if match()
+end
+
 #table안에 들어있는 text들을 array 형태로 반환
 def get_data(doc, cssstr)
 
@@ -18,13 +23,19 @@ end
 
 #숫자 표현된 string을 숫자로 바꿈(콤마 제거)
 def strtoint(str)
-  strlist = str.split(',')
+  begin
+    strlist = str.split(',')
 
-  tot = ''
-  for tmp in strlist
-    tot = tot + tmp
+    tot = ''
+    for tmp in strlist
+      tot = tot + tmp
+    end
+
+    return tot.to_f
+  rescue
+    return "error"
   end
-  return tot.to_f
+
 end
 
 #한글 카테고리와 DB schema 매칭, 재무상태표

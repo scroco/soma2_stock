@@ -15,6 +15,7 @@ namespace :crawler do
   end
 
   task :firm_data => :environment do
+    #crwal_financialStatement
     crawl_firmdata
   end
 end
