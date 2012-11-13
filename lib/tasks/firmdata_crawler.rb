@@ -332,7 +332,7 @@ def crawl_firmdata ()
 
 
     h.each { |key, value|
-      #tup = value
+      tup = value
       #puts "save #{key} : #{tup}"
       #puts tup.to_yaml
       #puts '\n'
