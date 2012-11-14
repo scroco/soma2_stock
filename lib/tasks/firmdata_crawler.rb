@@ -49,13 +49,15 @@ def crawl_firmdata ()
           next
         end
 
-        if h[tmp_date] == nil then
+        tup = h[tmp_date]
+        if tup == nil then
           #[tmp_date] = stock_code.build_FirmDatum
           h[tmp_date] = FirmDatum.new(:stock_code => stock_code)
-          h[tmp_date][:date] = Date.strptime(tmp_date, '%Y.%m')
+          tup = h[tmp_date]
+          tup[:date] = Date.strptime(tmp_date, '%Y.%m')
         end
 
-        valuename_translator(tmp_name, strtoint(value), h[tmp_date])
+        valuename_translator(tmp_name, strtoint(value), tup)
 
       end
     end
@@ -94,13 +96,15 @@ def crawl_firmdata ()
           next
         end
 
-        if h[tmp_date] == nil then
+        tup = h[tmp_date]
+        if tup == nil then
           #[tmp_date] = stock_code.build_FirmDatum
           h[tmp_date] = FirmDatum.new(:stock_code => stock_code)
-          h[tmp_date][:date] = Date.strptime(tmp_date, '%Y.%m')
+          tup = h[tmp_date]
+          tup[:date] = Date.strptime(tmp_date, '%Y.%m')
         end
 
-        valuename_translator2(tmp_name, strtoint(value), h[tmp_date])
+        valuename_translator2(tmp_name, strtoint(value), tup)
 
       end
     end
@@ -140,7 +144,8 @@ def crawl_firmdata ()
         tup = h[tmp_date]
         if tup == nil then
           #[tmp_date] = stock_code.build_FirmDatum
-          tup = FirmDatum.new(:stock_code => stock_code)
+          h[tmp_date] = FirmDatum.new(:stock_code => stock_code)
+          tup = h[tmp_date]
           tup[:date] = Date.strptime(tmp_date, '%Y.%m')
         end
         valuename_translator3(tmp_name, strtoint(value), tup)
@@ -237,15 +242,15 @@ def crawl_firmdata ()
 
     cnt = 0
     for tmp in date do
-      if h[tmp] == nil then
+      tup = h[tmp]
+      if tup == nil then
         #[tmp_date] = stock_code.build_FirmDatum
         h[tmp] = FirmDatum.new(:stock_code => stock_code)
+        tup = h[tmp]
+        tup[:date] = Date.strptime(tmp_date, '%Y.%m')
       end
 
-      tup = h[tmp]
       #valuename_translator2(tmp_name, strtoint(value), tup)
-      tup[:date] = Date.strptime(tmp_date, '%Y.%m')
-
 
       if veps[cnt] != "N/A"
         tup[:eps] = strtoint(veps[cnt])
@@ -333,7 +338,8 @@ def crawl_firmdata ()
 
     h.each { |key, value|
       tup = value
-      puts "save #{key} : #{tup[:workingCapital]}"
+      puts "save #{key} : "
+      #puts "#{tup[:date]} #{tup[:interest_coverage_ratio]} \n"
       puts tup.save!
     }
 
