@@ -143,6 +143,11 @@ ActiveRecord::Schema.define(:version => 20121113080921) do
 
   add_index "stock_codes", ["symbol"], :name => "index_stock_codes_on_symbol", :unique => true
 
+  create_table "stock_orders", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   add_foreign_key "day_candles", "stock_codes", :name => "day_candles_symbol_fk", :column => "symbol", :primary_key => "symbol"
 
 end
