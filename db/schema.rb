@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121118085558) do
+ActiveRecord::Schema.define(:version => 20121118123612) do
 
   create_table "day_candles", :force => true do |t|
     t.string   "symbol"
@@ -28,7 +28,6 @@ ActiveRecord::Schema.define(:version => 20121118085558) do
   end
 
   add_index "day_candles", ["date", "symbol"], :name => "index_day_candles_on_date_and_symbol", :unique => true
-  add_index "day_candles", ["symbol"], :name => "day_candles_symbol_fk"
   add_index "day_candles", ["trading_date", "symbol"], :name => "index_day_candles_on_trading_date_and_symbol", :unique => true
 
   create_table "firm_daily_data", :force => true do |t|
@@ -141,6 +140,7 @@ ActiveRecord::Schema.define(:version => 20121118085558) do
     t.datetime "created_at",                                :null => false
     t.datetime "updated_at",                                :null => false
     t.integer  "stock_code_id"
+    t.integer  "fcf"
   end
 
   create_table "stock_codes", :force => true do |t|
@@ -158,6 +158,16 @@ ActiveRecord::Schema.define(:version => 20121118085558) do
 
   add_index "stock_codes", ["symbol"], :name => "index_stock_codes_on_symbol", :unique => true
 
-  add_foreign_key "day_candles", "stock_codes", :name => "day_candles_symbol_fk", :column => "symbol", :primary_key => "symbol"
+  create_table "trading_signals", :force => true do |t|
+    t.datetime "entry_date"
+    t.datetime "exit_date"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "trading_strategies", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
 end
