@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -11,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121113080921) do
+ActiveRecord::Schema.define(:version => 20121118061629) do
 
   create_table "day_candles", :force => true do |t|
     t.string   "symbol"
@@ -21,12 +20,25 @@ ActiveRecord::Schema.define(:version => 20121113080921) do
     t.integer  "l"
     t.integer  "c"
     t.integer  "v"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+    t.integer  "firm_daily_datum_id"
   end
 
   add_index "day_candles", ["date", "symbol"], :name => "index_day_candles_on_date_and_symbol", :unique => true
   add_index "day_candles", ["symbol"], :name => "day_candles_symbol_fk"
+
+  create_table "firm_daily_data", :force => true do |t|
+    t.float    "per"
+    t.float    "pbr"
+    t.float    "pcr"
+    t.float    "pdr"
+    t.float    "psr"
+    t.float    "market_capitalization"
+    t.float    "iroi"
+    t.datetime "created_at",            :null => false
+    t.datetime "updated_at",            :null => false
+  end
 
   create_table "firm_data", :force => true do |t|
     t.datetime "date"
