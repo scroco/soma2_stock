@@ -10,8 +10,7 @@ class CreateFirmDailyData < ActiveRecord::Migration
       t.float :iroi
 
       t.timestamps
-      end
+    end
+    add_column('day_candles', 'firm_daily_datum_id', :integer, :index => true)
   end
-  add_column('day_candles', 'firm_daily_datum_id', :integer, :index => true)
-
 end
