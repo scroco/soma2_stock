@@ -8,7 +8,7 @@ require 'tasks/api_crawler'
 def crawl_firmdata ()
 
   cnt2=0
-  StockCode.all().each do |stock_code|
+  StockCode.find_each do |stock_code|
     #cnt2 = cnt2+1
     #if cnt2 > 1 then
     #  break
