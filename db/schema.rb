@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121118085233) do
+ActiveRecord::Schema.define(:version => 20121118085558) do
 
   create_table "day_candles", :force => true do |t|
     t.string   "symbol"
@@ -44,7 +44,7 @@ ActiveRecord::Schema.define(:version => 20121118085233) do
   end
 
   create_table "firm_data", :force => true do |t|
-    t.datetime "date"
+    t.date     "date"
     t.string   "period"
     t.integer  "working_capital"
     t.integer  "quick_assets"
