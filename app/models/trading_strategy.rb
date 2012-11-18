@@ -4,7 +4,7 @@ class TradingStrategy < ActiveRecord::Base
 
   def is_parameter_pass? (date, stock_code)
     #:entry_parameter, :exit_paramenter
-    isPass = false
+    is_pass = false
 
     # 이익 예측가능성
 
@@ -13,21 +13,21 @@ class TradingStrategy < ActiveRecord::Base
     last_firm_data = firm_data.last
 
     if firm_data and last_firm_data
-      isPass = true
+      pass_count = 0
       #puts "date : #{date}"
 
       recent_firm_data = firm_data.where("date > ?", date - 5.years).order(:date)
 
       # 매출액 테스트
-      if last_firm_data[:sales] and last_firm_data[:sales] < 3400
-        isPass = false
+      if last_firm_data[:sales] and last_firm_data[:sales] >= 3400
+        pass_count += 1
       end
 
       # 유동비율 : 유동자산 / 유동부채 * 100 (working_capital / floating_debt)
       if last_firm_data[:working_capital] and last_firm_data[:floating_debt]
         current_ratio = last_firm_data[:working_capital] / last_firm_data[:floating_debt] * 100
-        if current_ratio < 200
-          isPass = false
+        if current_ratio >= 200
+          pass_count += 1
         end
       end
 
@@ -43,35 +43,38 @@ class TradingStrategy < ActiveRecord::Base
         end
       end
 
-      if sum_of_eps < 0
-        isPass = false
+      if sum_of_eps >= 0
+        pass_count += 1
       end
 
       if recent_firm_data.first[:eps] and recent_firm_data.last[:eps] and
-        recent_firm_data.first[:eps] * 1.3 > recent_firm_data.last[:eps]
-        isPass = false
+        recent_firm_data.first[:eps] * 1.3 <= recent_firm_data.last[:eps]
+        pass_count += 1
       end
 
       # FirmDailyDatum
       # attr_accessible :per, :pbr, :pcr, :pdr, :psr, :market_capitalization, :iroi
 
-      if last_firm_data[:per] and last_firm_data[:per] > 15
-        isPass = false
+      if last_firm_data[:per] and last_firm_data[:per] <= 15
+        pass_count += 1
       end
 
-      if last_firm_data[:pbr] and last_firm_data[:per] and last_firm_data[:pbr] * last_firm_data[:per] > 22
-        isPass = false
+      if last_firm_data[:pbr] and last_firm_data[:per] and last_firm_data[:pbr] * last_firm_data[:per] <= 22
+        pass_count += 1
       end
 
       # 총부채비율 100% 이하
       #debt_to_equity_ratio
-      if last_firm_data[:debt_to_equity_ratio] and last_firm_data[:debt_to_equity_ratio] > 230
-        isPass = false
+      if last_firm_data[:debt_to_equity_ratio] and last_firm_data[:debt_to_equity_ratio] <= 230
+        pass_count += 1
       end
+
+
+      is_pass = (pass_count > 3)
     end
 
 
-    return isPass
+    return is_pass
   end
 
   # 특정한 날짜에 특정한 종목에 대한 테스트
