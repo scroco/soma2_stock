@@ -8,4 +8,3 @@ class DayCandle < ActiveRecord::Base
   belongs_to :firm_daily_data
   belongs_to :stock_code, :primary_key => :symbol, :foreign_key => :symbol
 end
-                                                                                              /
