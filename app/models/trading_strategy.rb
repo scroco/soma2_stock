@@ -5,6 +5,10 @@ class TradingStrategy < ActiveRecord::Base
   def is_parameter_pass? (date, stock_code)
     #:entry_parameter, :exit_paramenter
 
+    if self[:name] == "John Neff" then
+
+    end
+
     # 각 전략별로 다르다.
     #if self[:name] == "워렌버핏"
     #  # 날짜에 해당하는 회사데이터, 일봉 데이터 얻어오기

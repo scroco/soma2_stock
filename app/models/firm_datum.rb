@@ -19,7 +19,7 @@ class FirmDatum < ActiveRecord::Base
                   :cashflows_from_operating, :expenses_without_cash_outflow, :income_without_cash_inflow,
                   :operating_assets_liabilities_fluctuations, :cashflow_from_investing, :cash_inflow_from_investing,
                   :cash_outflow_from_investing, :cashflow_from_financing, :cash_inflow_from_financing,
-                  :cash_outflow_from_financing, :change_in_cash, :beginning_cash, :end_cash,
+                  :cash_outflow_from_financing, :change_in_cash, :beginning_cash, :end_cash, :fcf,
 
                   :eps, :eps_utem, :per, :bps_utem, :pbr, :cfps, :pcr, :sps, :psr, :roe, :ros, :sa, :ae,
                   :roa, :net_profit_margin, :net_profit_margin_gaap, :operating_profit_margin, :sales_growth,

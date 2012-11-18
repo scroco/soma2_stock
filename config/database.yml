@@ -11,13 +11,13 @@
 development:
   adapter: mysql2
   encoding: utf8
-  host: localhost
+  host: 27.102.207.206
   port: 3306
   reconnect: false
   database: stock2_development
   pool: 5
   username: root
-  password:
+  password: thak
   socket: /tmp/mysql.sock
 
 # Warning: The database defined as "test" will be erased and
@@ -38,7 +38,7 @@ test:
 production:
   adapter: mysql2
   encoding: utf8
-  host: localhost
+  host: 27.102.207.206
   port: 3306
   reconnect: false
   database: stock2_production
