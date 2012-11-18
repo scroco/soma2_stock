@@ -24,4 +24,9 @@ namespace :crawler do
     puts "firm_data_calculator started"
     firm_data_calculator
   end
+
+  task :test_signal => :environment do
+    d =  TradingStrategy.all.first
+    d.determine_signal
+  end
 end

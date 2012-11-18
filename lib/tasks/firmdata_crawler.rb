@@ -340,7 +340,10 @@ def crawl_firmdata ()
       tup = value
       #puts "save #{key} : "
       #puts "#{tup[:date]} #{tup[:interest_coverage_ratio]} \n"
-      puts "save #{key} #{tup.save!}"
+
+      if !FirmDatum.where(:date => tup[:date]).where(:stock_code_id => tup[:stock_code_id]).exists?
+        puts "save #{key} #{tup.save!}"
+      end
     }
 
   end

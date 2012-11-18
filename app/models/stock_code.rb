@@ -7,4 +7,5 @@ class StockCode < ActiveRecord::Base
 
   has_many :day_candles, :primary_key => :symbol, :foreign_key => :symbol
   has_many :firm_data
+  has_many :trading_signals
 end

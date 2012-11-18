@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121118123612) do
+ActiveRecord::Schema.define(:version => 20121118162805) do
 
   create_table "day_candles", :force => true do |t|
     t.string   "symbol"
@@ -154,6 +154,7 @@ ActiveRecord::Schema.define(:version => 20121118123612) do
     t.datetime "crawl_date"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
+    t.integer  "stock_code_id"
   end
 
   add_index "stock_codes", ["symbol"], :name => "index_stock_codes_on_symbol", :unique => true
@@ -161,11 +162,17 @@ ActiveRecord::Schema.define(:version => 20121118123612) do
   create_table "trading_signals", :force => true do |t|
     t.datetime "entry_date"
     t.datetime "exit_date"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+    t.integer  "stock_code_id"
+    t.integer  "trading_strategy_id"
   end
 
   create_table "trading_strategies", :force => true do |t|
+    t.string   "name"
+    t.string   "strategy"
+    t.datetime "start_date"
+    t.datetime "end_date"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end

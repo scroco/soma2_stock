@@ -6,5 +6,10 @@ class CreateTradingSignals < ActiveRecord::Migration
 
       t.timestamps
     end
+
+    add_column('trading_signals', 'stock_code_id', :integer, :index => true)
+    add_column('trading_signals', 'trading_strategy_id', :integer, :index => true)
   end
 end
+
+
