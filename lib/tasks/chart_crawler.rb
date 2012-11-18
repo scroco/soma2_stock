@@ -48,7 +48,8 @@ def crawl_chart (code = 000270, count = 10000)
 
     if !DayCandle.duplicated?(symbol, date)
       begin
-        DayCandle.create(:symbol => symbol, :date => date, :o => o, :h => h, :l => l, :c => c, :v => v)
+        trading_date = Time.parse(date)
+        DayCandle.create(:symbol => symbol, :date => date, :o => o, :h => h, :l => l, :c => c, :v => v, :trading_date => trading_date)
       rescue
         puts $!
       end
