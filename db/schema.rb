@@ -202,8 +202,9 @@ ActiveRecord::Schema.define(:version => 20121119032328) do
     t.string   "strategy"
     t.datetime "start_date"
     t.datetime "end_date"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "tested_date"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
 end
