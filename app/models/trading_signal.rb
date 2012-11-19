@@ -21,6 +21,6 @@ class TradingSignal < ActiveRecord::Base
 
   belongs_to :trading_strategy
   belongs_to :stock_code
-  #has_many :orders
+  has_many :orders
 end
 

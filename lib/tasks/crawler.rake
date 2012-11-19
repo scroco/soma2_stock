@@ -24,8 +24,14 @@ namespace :crawler do
     puts "firm_data_calculator started"
     firm_data_calculator
   end
+end
 
-  task :test_signal => :environment do
+namespace :back_tester do
+  task :signal => :environment do
     TradingStrategy.determine_signal_start
+  end
+
+  task :asset => :environment do
+    AssetAccount.start_simulation
   end
 end

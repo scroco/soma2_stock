@@ -5,6 +5,7 @@ class CreateTradingStrategies < ActiveRecord::Migration
       t.string  :strategy
       t.datetime  :start_date
       t.datetime  :end_date
+      t.datetime  :tested_date
 
       t.timestamps
     end

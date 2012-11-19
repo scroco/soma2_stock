@@ -1,5 +1,5 @@
 class TradingStrategy < ActiveRecord::Base
-  attr_accessible :name, :strategy, :start_date, :end_date
+  attr_accessible :name, :strategy, :start_date, :end_date, :tested_date
   #2003년 1월 1일 ~ 오늘까지
 
   def is_parameter_pass? (date, stock_code)
@@ -121,14 +121,23 @@ class TradingStrategy < ActiveRecord::Base
   # start function
   def determine_signal
     # 테스트 된 날짜부터 목표날짜까지 테스트
-    target_date = Time.now
-    start_date = self[:end_date]
-    start_date = Time.parse("030101")
-    if start_date == nil
-      start_date = Time.parse("030101")
+    self[:start_date] = Time.parse("030101")
+    self.save
+
+    target_date = self[:end_date]
+    if target_date == nil
+      target_date = Time.now
+    end
+    tested_date = self[:tested_date]
+    if tested_date == nil
+      tested_date = self[:start_date]
+
+      if tested_date == nil
+        tested_date = Time.parse("030101")
+      end
     end
 
-    (start_date.to_date..target_date.to_date).each do |date|
+    (tested_date.to_date..target_date.to_date).each do |date|
       #formatted_date = date.strftime("%Y%m%d")
 
       # 모든 종목에 대해서 테스트
@@ -138,7 +147,7 @@ class TradingStrategy < ActiveRecord::Base
 
       # 똑같은 날짜는 다시 테스트 안하게
       puts "date : #{date}"
-      self[:end_date] = date
+      self[:tested_date] = date
       self.save
     end
   end
@@ -153,5 +162,5 @@ class TradingStrategy < ActiveRecord::Base
   end
 
   has_many :trading_signals
-  #has_many :asset_managers
+  has_many :asset_accounts
 end
