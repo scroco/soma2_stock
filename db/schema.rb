@@ -48,6 +48,7 @@ ActiveRecord::Schema.define(:version => 20121119032328) do
   end
 
   add_index "day_candles", ["date", "symbol"], :name => "index_day_candles_on_date_and_symbol", :unique => true
+  add_index "day_candles", ["symbol"], :name => "day_candles_symbol_fk"
   add_index "day_candles", ["trading_date", "symbol"], :name => "index_day_candles_on_trading_date_and_symbol", :unique => true
 
   create_table "firm_daily_data", :force => true do |t|
@@ -188,6 +189,11 @@ ActiveRecord::Schema.define(:version => 20121119032328) do
 
   add_index "stock_codes", ["symbol"], :name => "index_stock_codes_on_symbol", :unique => true
 
+  create_table "stock_orders", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "trading_signals", :force => true do |t|
     t.datetime "entry_date"
     t.datetime "exit_date"
@@ -206,5 +212,7 @@ ActiveRecord::Schema.define(:version => 20121119032328) do
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
+
+  add_foreign_key "day_candles", "stock_codes", :name => "day_candles_symbol_fk", :column => "symbol", :primary_key => "symbol"
 
 end
