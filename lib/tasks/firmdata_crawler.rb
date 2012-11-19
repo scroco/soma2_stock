@@ -36,11 +36,14 @@ def crawl_firmdata ()
     #puts valuelist
     valuelist.delete_at(0) #쓰레기 값 제거
 
+    for tmp_date in date do
+      h[tmp_date] = FirmDatum.where(:date => Date.strptime(tmp_date, '%Y.%m')).where(:stock_code_id => stock_code).first
+    end
+
     cnt=0
     for tmp_name in namelist do
       #puts tmp_name
       for tmp_date in date do
-
         value = valuelist[cnt]
         cnt = cnt+1
         #puts value
@@ -340,10 +343,7 @@ def crawl_firmdata ()
       tup = value
       #puts "save #{key} : "
       #puts "#{tup[:date]} #{tup[:interest_coverage_ratio]} \n"
-
-      if !FirmDatum.where(:date => tup[:date]).where(:stock_code_id => tup[:stock_code_id]).exists?
-        puts "save #{key} #{tup.save!}"
-      end
+      puts "save #{key} #{tup.save!}"
     }
 
   end
