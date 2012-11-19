@@ -154,7 +154,6 @@ ActiveRecord::Schema.define(:version => 20121118162805) do
     t.datetime "crawl_date"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
-    t.integer  "stock_code_id"
   end
 
   add_index "stock_codes", ["symbol"], :name => "index_stock_codes_on_symbol", :unique => true

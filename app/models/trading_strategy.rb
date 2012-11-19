@@ -16,7 +16,7 @@ class TradingStrategy < ActiveRecord::Base
       pass_count = 0
       #puts "date : #{date}"
 
-      recent_firm_data = firm_data.where("date > ?", date - 5.years).order(:date)
+      recent_firm_data = firm_data.where("date >= ?", date - 1.years).order(:date)
 
       # 매출액 테스트
       if last_firm_data[:sales] and last_firm_data[:sales] >= 3400
@@ -37,19 +37,19 @@ class TradingStrategy < ActiveRecord::Base
 
 
       sum_of_eps = 0
+      count_of_eps = 0
       recent_firm_data.each do |firm_datum|
         if firm_datum[:eps]
           sum_of_eps += firm_datum[:eps]
+          count_of_eps += 1
         end
       end
 
-      if sum_of_eps >= 0
-        pass_count += 1
-      end
-
-      if recent_firm_data.first[:eps] and recent_firm_data.last[:eps] and
-        recent_firm_data.first[:eps] * 1.3 <= recent_firm_data.last[:eps]
-        pass_count += 1
+      if count_of_eps > 0 and sum_of_eps >= 0
+        if recent_firm_data.first[:eps] and recent_firm_data.last[:eps] and
+            recent_firm_data.first[:eps] * 1.3 <= recent_firm_data.last[:eps]
+          pass_count += 1
+        end
       end
 
       # FirmDailyDatum
@@ -70,7 +70,7 @@ class TradingStrategy < ActiveRecord::Base
       end
 
 
-      is_pass = (pass_count > 3)
+      is_pass = (pass_count > 2)
     end
 
 
@@ -81,15 +81,7 @@ class TradingStrategy < ActiveRecord::Base
   def determine_signal_on_date_in_stock (date, stock_code)
     is_pass = is_parameter_pass? date, stock_code
 
-    last_signal = stock_code.trading_signals.last
-
-    #puts "date : #{date}, stock_code : #{stock_code}, ispass : #{is_pass}"
-
-    if last_signal
-      #puts "last_signal  : #{last_signal }, last_signal[:exit_date] : #{last_signal[:exit_date]}, ispass:#{is_pass}"
-    else
-      #puts "last_signal  : #{last_signal }, ispass:#{is_pass}"
-    end
+    last_signal = stock_code.trading_signals.where("entry_date < ?", date).last
 
     if last_signal and !last_signal[:exit_date]
       # 바로 앞의 signal 은 entry 상태
@@ -107,13 +99,20 @@ class TradingStrategy < ActiveRecord::Base
       # exit => 통과 : entry
       # exit => 실패 : none
       if is_pass
-        trading_signal = TradingSignal.new(:entry_date => date)
-        # TODO : parameter 저장하면 좋겠음.
+        if last_signal and last_signal[:entry_date] > date - 2.days
+          puts "entry with recent"
+          last_signal[:exit_date] = nil
+          last_signal.save
+        else
+          trading_signal = TradingSignal.new(:entry_date => date)
+          # TODO : parameter 저장하면 좋겠음.
 
-        puts "entry"
-        stock_code.trading_signals << trading_signal
-        self.trading_signals << trading_signal
-        trading_signal.save
+          puts "entry"
+          stock_code.trading_signals << trading_signal
+          self.trading_signals << trading_signal
+          trading_signal.save
+        end
+
       end
     end
   end
@@ -123,9 +122,10 @@ class TradingStrategy < ActiveRecord::Base
   def determine_signal
     # 테스트 된 날짜부터 목표날짜까지 테스트
     target_date = Time.now
-    start_date = self[:last_tested]
+    start_date = self[:end_date]
+    start_date = Time.parse("030101")
     if start_date == nil
-      start_date = Time.parse("080101")
+      start_date = Time.parse("030101")
     end
 
     (start_date.to_date..target_date.to_date).each do |date|
@@ -136,8 +136,19 @@ class TradingStrategy < ActiveRecord::Base
         determine_signal_on_date_in_stock date, stock_code
       end
 
-      self[:last_tested] = date
+      # 똑같은 날짜는 다시 테스트 안하게
+      puts "date : #{date}"
+      self[:end_date] = date
       self.save
+    end
+  end
+
+  # 테스터
+  # start function
+  def self.determine_signal_start
+    TradingStrategy.find_each do |trading_strategy|
+      puts "name : #{trading_strategy[:id]}"
+      trading_strategy.determine_signal
     end
   end
 

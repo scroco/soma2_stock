@@ -26,7 +26,6 @@ namespace :crawler do
   end
 
   task :test_signal => :environment do
-    d =  TradingStrategy.all.first
-    d.determine_signal
+    TradingStrategy.determine_signal_start
   end
 end
