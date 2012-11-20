@@ -40,6 +40,79 @@ namespace :back_tester do
     if ts == nil
       ts = TradingStrategy.new(:name => "First Trading Strategy")
     end
+
+    source = <<-eos
+
+    # 이익 예측가능성
+    # 매출
+    firm_data = stock_code.firm_data.where("date < ?", date)
+    last_firm_data = firm_data.last
+
+    if firm_data and last_firm_data
+      pass_count = 0
+
+      recent_firm_data = firm_data.where("date >= ?", date - 1.years).order(:date)
+
+      # 매출액 테스트
+      if last_firm_data.sales and last_firm_data.sales >= 3400
+        pass_count += 1
+      end
+
+      # 유동비율 : 유동자산 / 유동부채 * 100 (working_capital / floating_debt)
+      if last_firm_data.working_capital and last_firm_data.floating_debt
+        current_ratio = last_firm_data.working_capital / last_firm_data.floating_debt * 100
+        if current_ratio >= 200
+          pass_count += 1
+        end
+      end
+
+      # 장기 EPS 성장 (과거 1년간)
+      # 1년 전 꺼 랑 지금꺼랑 30% 이상
+      # 지금 / 1년전 * 100 > 130 and 1년꺼 평균 > 0
+
+
+      sum_of_eps = 0
+      count_of_eps = 0
+      recent_firm_data.find_each do |firm_datum|
+        if firm_datum.eps
+          sum_of_eps += firm_datum.eps
+          count_of_eps += 1
+        end
+      end
+
+      if count_of_eps > 0 and sum_of_eps >= 0
+        if recent_firm_data.first.eps and recent_firm_data.last.eps and
+            recent_firm_data.first.eps * 1.3 <= recent_firm_data.last.eps
+          pass_count += 1
+        end
+      end
+
+      # FirmDailyDatum
+      # attr_accessible :per, :pbr, :pcr, :pdr, :psr, :market_capitalization, :iroi
+
+      if last_firm_data[:per] and last_firm_data[:per] <= 15
+        pass_count += 1
+      end
+
+      if last_firm_data[:pbr] and last_firm_data[:per] and last_firm_data[:pbr] * last_firm_data[:per] <= 22
+        pass_count += 1
+      end
+
+      # 총부채비율 100% 이하
+      #debt_to_equity_ratio
+      if last_firm_data[:debt_to_equity_ratio] and last_firm_data[:debt_to_equity_ratio] <= 230
+        pass_count += 1
+      end
+
+
+      is_pass = (pass_count > 2)
+    end
+    eos
+
+
+    ts.strategy = source
+    ts.save
+
     ts.save
 
     as = AssetStrategy.where(:name => "First Asset Strategy").first
