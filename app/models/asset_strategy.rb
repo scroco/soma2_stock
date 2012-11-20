@@ -1,7 +1,7 @@
 class AssetStrategy < ActiveRecord::Base
   attr_accessible :name, :strategy
 
-  def investment_asset (options = Hash.new)
+  def investment_asset (options = {})
     # 일정한 돈 분배 case
 
     constant_asset = 100000
