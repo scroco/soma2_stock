@@ -15,7 +15,7 @@ development:
   port: 3306
   reconnect: false
   database: stock2_development
-  pool: 5
+  pool: 50
   username: root
   password:
   socket: /tmp/mysql.sock

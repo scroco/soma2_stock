@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -51,8 +50,10 @@ ActiveRecord::Schema.define(:version => 20121120142048) do
   end
 
   add_index "day_candles", ["date", "symbol"], :name => "index_day_candles_on_date_and_symbol", :unique => true
+  add_index "day_candles", ["symbol"], :name => "day_candles_symbol_fk"
   add_index "day_candles", ["trading_date", "symbol"], :name => "index_day_candles_on_trading_date_and_symbol", :unique => true
   add_index "day_candles", ["trading_date"], :name => "index_day_candles_on_trading_date"
+  add_index "day_candles", ["trading_date"], :name => "trading_date"
 
   create_table "firm_daily_data", :force => true do |t|
     t.float    "per"
@@ -216,8 +217,11 @@ ActiveRecord::Schema.define(:version => 20121120142048) do
     t.string   "strategy"
     t.datetime "start_date"
     t.datetime "end_date"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "tested_date"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
+
+  add_foreign_key "day_candles", "stock_codes", :name => "day_candles_symbol_fk", :column => "symbol", :primary_key => "symbol"
 
 end
