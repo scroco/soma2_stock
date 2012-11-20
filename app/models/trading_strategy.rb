@@ -5,11 +5,7 @@ class TradingStrategy < ActiveRecord::Base
   #2003년 1월 1일 ~ 오늘까지
 
   def is_parameter_pass? (date, stock_code)
-    #:entry_parameter, :exit_paramenter
-    is_pass = false
-
     eval(self.strategy)
-    return is_pass
   end
 
   # 특정한 날짜에 특정한 종목에 대한 테스트
@@ -94,7 +90,7 @@ class TradingStrategy < ActiveRecord::Base
   # start function
   def self.determine_signal_start
     TradingStrategy.find_each do |trading_strategy|
-      puts "TradingStrategy name : #{trading_strategy[:id]}"
+      puts "TradingStrategy name : #{trading_strategy[:name]}"
       trading_strategy.determine_signal
     end
   end
