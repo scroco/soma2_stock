@@ -11,7 +11,27 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121118085558) do
+ActiveRecord::Schema.define(:version => 20121119032328) do
+
+  create_table "asset_accounts", :force => true do |t|
+    t.integer  "base_asset"
+    t.integer  "current_asset"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.datetime "tested_date"
+    t.integer  "constant_asset"
+    t.integer  "trading_strategy_id"
+    t.integer  "asset_strategy_id"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+  end
+
+  create_table "asset_strategies", :force => true do |t|
+    t.string   "name"
+    t.string   "strategy"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "day_candles", :force => true do |t|
     t.string   "symbol"
@@ -141,6 +161,17 @@ ActiveRecord::Schema.define(:version => 20121118085558) do
     t.datetime "created_at",                                :null => false
     t.datetime "updated_at",                                :null => false
     t.integer  "stock_code_id"
+    t.integer  "fcf"
+  end
+
+  create_table "orders", :force => true do |t|
+    t.integer  "number_of_stocks"
+    t.integer  "trading_signal_id"
+    t.integer  "asset_account_id"
+    t.integer  "entry_day_candle_id"
+    t.integer  "exit_day_candle_id"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
   end
 
   create_table "stock_codes", :force => true do |t|
@@ -157,6 +188,30 @@ ActiveRecord::Schema.define(:version => 20121118085558) do
   end
 
   add_index "stock_codes", ["symbol"], :name => "index_stock_codes_on_symbol", :unique => true
+
+  create_table "stock_orders", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "trading_signals", :force => true do |t|
+    t.datetime "entry_date"
+    t.datetime "exit_date"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+    t.integer  "stock_code_id"
+    t.integer  "trading_strategy_id"
+  end
+
+  create_table "trading_strategies", :force => true do |t|
+    t.string   "name"
+    t.string   "strategy"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.datetime "tested_date"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
 
   add_foreign_key "day_candles", "stock_codes", :name => "day_candles_symbol_fk", :column => "symbol", :primary_key => "symbol"
 

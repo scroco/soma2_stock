@@ -188,6 +188,8 @@ def valuename_translator3(ko, value, rec_value)
     rec_value[:beginning_cash] = value
   elsif ko == "기말의 현금" then
     rec_value[:end_cash] = value
+  elsif ko == "FreeCashFlow1" then
+    rec_value[:fcf] = value
   end
 
 end

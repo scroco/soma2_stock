@@ -25,3 +25,32 @@ namespace :crawler do
     firm_data_calculator
   end
 end
+
+namespace :back_tester do
+  task :signal => :environment do
+    TradingStrategy.determine_signal_start
+  end
+
+  task :asset => :environment do
+    AssetAccount.start_simulation
+  end
+
+  task :generate_strategies => :environment do
+    ts = TradingStrategy.where(:name => "First Trading Strategy").first
+    if ts == nil
+      ts = TradingStrategy.new(:name => "First Trading Strategy")
+    end
+    ts.save
+
+    as = AssetStrategy.where(:name => "First Asset Strategy").first
+    if as == nil
+      as = AssetStrategy.new(:name => "First Asset Strategy")
+    end
+    as.save
+
+    aa = AssetAccount.new(:base_asset => 2000000)
+    ts.asset_accounts << aa
+    as.asset_accounts << aa
+    aa.save
+  end
+end
