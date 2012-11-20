@@ -73,14 +73,13 @@ namespace :back_tester do
 
     source = <<-eos
 
+    pass_count = 0
     # 이익 예측가능성
     # 매출
     firm_data = stock_code.firm_data.where("date < ?", date)
     last_firm_data = firm_data.last
 
     if firm_data and last_firm_data
-      pass_count = 0
-
       recent_firm_data = firm_data.where("date >= ?", date - 1.years).order(:date)
 
       # 매출액 테스트
@@ -135,14 +134,13 @@ namespace :back_tester do
       end
 
 
-      is_pass = (pass_count > 2)
+
     end
+    return (pass_count > 2)
     eos
 
 
     ts.strategy = source
-    ts.save
-
     ts.save
 
     as = AssetStrategy.where(:name => "First Asset Strategy").first
