@@ -68,11 +68,14 @@ class FirmDataCalculator
           else
             psr = current_stock_price / firm_datum["sps"].to_f
           end
-          if firm_datum["sales"] == nil or firm_datum["sales"] == nil
+
+          if firm_datum["sales"] == nil or firm_datum["sales"] == nil or firm_datum["sales"] == 0.0 or firm_datum["sales"] == 0.0
             market_capitalization = nil
           else
             market_capitalization = current_stock_price * (firm_datum["sales"].to_f / firm_datum["sps"].to_f)
           end
+          puts "market_capitalization : #{market_capitalization}"
+
           if per == nil or per == 0.0
             iroi = nil
           else
@@ -150,7 +153,8 @@ def firm_data_calculator
       else
         psr = current_stock_price / firm_datum["sps"].to_f
       end
-      if firm_datum["sales"] == nil or firm_datum["sales"] == nil
+
+      if firm_datum["sales"] == nil or firm_datum["sales"] == nil or firm_datum["sales"] == 0.0 or firm_datum["sales"] == 0.0
         market_capitalization = nil
       else
         market_capitalization = current_stock_price * (firm_datum["sales"].to_f / firm_datum["sps"].to_f)
