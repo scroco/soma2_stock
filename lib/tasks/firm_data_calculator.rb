@@ -98,9 +98,7 @@ def firm_data_calculator
   #puts(DayCandle.where("firm_daily_datum_id is null and trading_date >= ?", Time.utc(2002,12,31)).to_sql)
 
   DayCandle.where("firm_daily_datum_id is null and trading_date >= ?", Time.utc(2002,12,31)).find_each do |day_candle|
-    current = Time.now
 
-     # 없는 애들만 업데이트
     #date = day_candle["date"][0,4] << "-" << day_candle["date"][4,2] << "-" << day_candle["date"][6,2]
     date = day_candle["trading_date"]
     puts(date)
@@ -110,16 +108,9 @@ def firm_data_calculator
     puts(stock_code["id"])
     #puts(stock_code.firm_data.where("date <= ?", date).to_sql)
 
-    puts "1 : #{Time.now - current}"
-    current = Time.now
-
-    puts(stock_code.firm_data.where("date <= ?", date).to_sql)
-
     firm_datum = stock_code.firm_data.where("date <= ?", date).first
 
-    puts "2 : #{Time.now - current}"
-    current = Time.now
-
+    per, pbr, pcr, pdr, psr, market_capitalization, iroi = nil
 
     if firm_datum == nil
 
@@ -127,21 +118,23 @@ def firm_data_calculator
       current_stock_price = day_candle["c"].to_f
       puts "c : #{current_stock_price}"
 
-      if firm_datum["eps"] == nil
+      puts "eps : #{firm_datum["eps"].to_f}"
+      if firm_datum["eps"] == nil or firm_datum["eps"].to_f == 0.0
         per = nil
       else
         per = current_stock_price / firm_datum["eps"].to_f
+
       end
-      puts "eps : #{firm_datum["eps"].to_f}"
       puts "per : #{per}"
-      if firm_datum["bps"] == nil
+
+      puts "pbr : #{pbr}"
+      if firm_datum["bps"] == nil or firm_datum["bps"].to_f == 0.0
         pbr = nil
       else
         pbr = current_stock_price / firm_datum["bps"].to_f
       end
-      puts "pbr : #{pbr}"
       puts "bps : #{firm_datum["bps"].to_f}"
-      if firm_datum["cfps"] == nil
+      if firm_datum["cfps"] == nil  or firm_datum["cfps"].to_f == 0.0
         pcr = nil
       else
         pcr = current_stock_price / firm_datum["cfps"].to_f
@@ -152,43 +145,33 @@ def firm_data_calculator
       # pdr = current_stock_price / ..
       psr = current_stock_price / firm_datum["sps"].to_f
 
-      if firm_datum["sps"] == nil
+      if firm_datum["sps"] == nil or firm_datum["sps"].to_f == 0.0
         psr = nil
       else
         psr = current_stock_price / firm_datum["sps"].to_f
       end
-      if firm_datum["sales"] == nil or firm_datum["sps"] == nil
+      if firm_datum["sales"] == nil or firm_datum["sales"] == nil
         market_capitalization = nil
       else
         market_capitalization = current_stock_price * (firm_datum["sales"].to_f / firm_datum["sps"].to_f)
       end
-      if per == nil
+      if per == nil or per == 0.0
         iroi = nil
       else
         iroi = 1 / per
       end
     end
 
-    puts "3 : #{Time.now - current}"
-    current = Time.now
+    #stock_codes["firm_data"]
 
-
-     #stock_codes["firm_data"]
-
-     #firmDatum = StockCode.where()
+    #firmDatum = StockCode.where()
     firm_daily_datum = FirmDailyDatum.create(:per => per, :pbr => pbr, :pcr => pcr , :pdr => nil, :psr => psr, :market_capitalization => market_capitalization, :iroi => iroi)
 
-    puts "4 : #{Time.now - current}"
-    current = Time.now
-
     day_candle.firm_daily_datum = firm_daily_datum
-    firm_daily_datum.save()
     day_candle.save()
 
-    puts "5 : #{Time.now - current}"
-    current = Time.now
 
-     #day_candle["firm_daily_datum"] = FirmDailyDatum.create(:per => per, :pbr => pbr, :pcr => pcr , :pdr => pdr, :psr => psr, :market_capitalization => market_capitalization, :iroi => iroi)
+    #day_candle["firm_daily_datum"] = FirmDailyDatum.create(:per => per, :pbr => pbr, :pcr => pcr , :pdr => pdr, :psr => psr, :market_capitalization => market_capitalization, :iroi => iroi)
   end
 end
 
