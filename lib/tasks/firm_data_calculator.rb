@@ -11,9 +11,8 @@
 
 
 def firm_data_calculator
-
-
-  DayCandle.where("firm_daily_datum_id is null and trading_date >= ?",'2002-12-31').find_each do |day_candle|
+  #puts(DayCandle.where("firm_daily_datum_id is null and trading_date >= ?", Time.utc(2002,12,31)).to_sql)
+  DayCandle.where("firm_daily_datum_id is null and trading_date >= ?", Time.utc(2002,12,31)).find_each do |day_candle|
      # 없는 애들만 업데이트
     #date = day_candle["date"][0,4] << "-" << day_candle["date"][4,2] << "-" << day_candle["date"][6,2]
     date = day_candle["trading_date"]
@@ -22,6 +21,7 @@ def firm_data_calculator
     stock_code = day_candle.stock_code
     puts(stock_code["symbol"])
     puts(stock_code["id"])
+    #puts(stock_code.firm_data.where("date <= ?", date).to_sql)
 
     firm_datum = stock_code.firm_data.where("date <= ?", date).first
     if firm_datum == nil
