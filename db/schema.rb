@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121120142048) do
+ActiveRecord::Schema.define(:version => 20121120162721) do
 
   create_table "asset_accounts", :force => true do |t|
     t.integer  "base_asset"
@@ -51,6 +51,7 @@ ActiveRecord::Schema.define(:version => 20121120142048) do
   end
 
   add_index "day_candles", ["date", "symbol"], :name => "index_day_candles_on_date_and_symbol", :unique => true
+  add_index "day_candles", ["firm_daily_datum_id"], :name => "index_day_candles_on_firm_daily_datum_id"
   add_index "day_candles", ["trading_date", "symbol"], :name => "index_day_candles_on_trading_date_and_symbol", :unique => true
   add_index "day_candles", ["trading_date"], :name => "index_day_candles_on_trading_date"
 
@@ -168,6 +169,7 @@ ActiveRecord::Schema.define(:version => 20121120142048) do
   end
 
   add_index "firm_data", ["date"], :name => "index_firm_data_on_date"
+  add_index "firm_data", ["stock_code_id"], :name => "index_firm_data_on_stock_code_id"
 
   create_table "orders", :force => true do |t|
     t.integer  "number_of_stocks"
@@ -216,8 +218,9 @@ ActiveRecord::Schema.define(:version => 20121120142048) do
     t.string   "strategy"
     t.datetime "start_date"
     t.datetime "end_date"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "tested_date"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
 end
