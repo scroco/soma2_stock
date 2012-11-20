@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121119032328) do
+ActiveRecord::Schema.define(:version => 20121120142048) do
 
   create_table "asset_accounts", :force => true do |t|
     t.integer  "base_asset"
@@ -25,6 +25,9 @@ ActiveRecord::Schema.define(:version => 20121119032328) do
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
   end
+
+  add_index "asset_accounts", ["asset_strategy_id"], :name => "index_asset_accounts_on_asset_strategy_id"
+  add_index "asset_accounts", ["trading_strategy_id"], :name => "index_asset_accounts_on_trading_strategy_id"
 
   create_table "asset_strategies", :force => true do |t|
     t.string   "name"
@@ -48,8 +51,8 @@ ActiveRecord::Schema.define(:version => 20121119032328) do
   end
 
   add_index "day_candles", ["date", "symbol"], :name => "index_day_candles_on_date_and_symbol", :unique => true
-  add_index "day_candles", ["symbol"], :name => "day_candles_symbol_fk"
   add_index "day_candles", ["trading_date", "symbol"], :name => "index_day_candles_on_trading_date_and_symbol", :unique => true
+  add_index "day_candles", ["trading_date"], :name => "index_day_candles_on_trading_date"
 
   create_table "firm_daily_data", :force => true do |t|
     t.float    "per"
@@ -164,6 +167,8 @@ ActiveRecord::Schema.define(:version => 20121119032328) do
     t.integer  "fcf"
   end
 
+  add_index "firm_data", ["date"], :name => "index_firm_data_on_date"
+
   create_table "orders", :force => true do |t|
     t.integer  "number_of_stocks"
     t.integer  "trading_signal_id"
@@ -173,6 +178,11 @@ ActiveRecord::Schema.define(:version => 20121119032328) do
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
   end
+
+  add_index "orders", ["asset_account_id"], :name => "index_orders_on_asset_account_id"
+  add_index "orders", ["entry_day_candle_id"], :name => "index_orders_on_entry_day_candle_id"
+  add_index "orders", ["exit_day_candle_id"], :name => "index_orders_on_exit_day_candle_id"
+  add_index "orders", ["trading_signal_id"], :name => "index_orders_on_trading_signal_id"
 
   create_table "stock_codes", :force => true do |t|
     t.string   "issue_code"
@@ -189,11 +199,6 @@ ActiveRecord::Schema.define(:version => 20121119032328) do
 
   add_index "stock_codes", ["symbol"], :name => "index_stock_codes_on_symbol", :unique => true
 
-  create_table "stock_orders", :force => true do |t|
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
   create_table "trading_signals", :force => true do |t|
     t.datetime "entry_date"
     t.datetime "exit_date"
@@ -203,16 +208,16 @@ ActiveRecord::Schema.define(:version => 20121119032328) do
     t.integer  "trading_strategy_id"
   end
 
+  add_index "trading_signals", ["entry_date"], :name => "index_trading_signals_on_entry_date"
+  add_index "trading_signals", ["exit_date"], :name => "index_trading_signals_on_exit_date"
+
   create_table "trading_strategies", :force => true do |t|
     t.string   "name"
     t.string   "strategy"
     t.datetime "start_date"
     t.datetime "end_date"
-    t.datetime "tested_date"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
-
-  add_foreign_key "day_candles", "stock_codes", :name => "day_candles_symbol_fk", :column => "symbol", :primary_key => "symbol"
 
 end
