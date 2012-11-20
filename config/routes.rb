@@ -4,6 +4,7 @@ Stock2::Application.routes.draw do
   resources :signals
   resources :firms
   resources :day_candles
+  resources :orders
   resources :daily_stocks
   # The priority is based upon order of creation:
   # first created -> highest priority.
