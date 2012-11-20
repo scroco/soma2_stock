@@ -1,18 +1,132 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-  <title>Stock2</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stock Analyzer</title>
+  <!-- 나눔 고딕 폰트 로딩 -->
+  <script src="http://www.google.com/jsapi"></script>
+  <script>
+      google.load( "webfont", "1" );
+      google.setOnLoadCallback(function() {
+          WebFont.load({ custom: {
+              families: [ "NanumGothic" ],
+              urls: [ "http://fontface.kr/NanumGothic/css" ]
+          }});
+      });
+  </script>
+  <!--
+
   <%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>
+  <%= csrf_meta_tags %>    -->
+
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+
+
+  <!--[if lte IE 8]>
+  <script src="js/ie/html5.js"></script>
+  <script src="js/ie/respond.min.js"></script>
+  <![endif]-->
+
+  <script>
+      //* hide all elements & show preloader
+      document.documentElement.className += 'js';
+  </script>
 </head>
-<body>
-<div>
-  Menu
+<body class="gebo-fixed">
+<div id="loading_layer" style="display:none"><img src="img/ajax_loader.gif" alt="" /></div>
+
+<div id="maincontainer" class="clearfix">
+<!-- header -->
+<header>
+  <div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+      <div class="container-fluid">
+        <a class="brand" href="/">stock analyzer</a>
+        <form class="navbar-search pull-left">
+          <input type="text" class="search-query" placeholder="종목검색">
+        </form>
+        <nav>
+          <div class="nav-collapse pull-right">
+            <ul class="nav">
+              <li class="dropdown">
+                <a data-toggle="dropdown" class="dropdown-toggle" href="#"> 투자자 수익률 분석 <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">벤저민 그레이엄</a></li>
+                  <li><a href="#">존 네프</a></li>
+                  <li><a href="#">데이비드 드레먼</a></li>
+                  <li><a href="#">워렌 버핏</a></li>
+                  <li><a href="#">피터 린치</a></li>
+                  <li><a href="#">케네스 피셔</a></li>
+                  <li><a href="#">마틴 즈웨이그</a></li>
+                  <li><a href="#">제임스 오쇼너시</a></li>
+                  <li><a href="#">조엘 그린블라트</a></li>
+                  <li><a href="#">조셉 피오트로스키</a></li>
+                </ul>
+              </li>
+              <li class="dropdown">
+                <a data-toggle="dropdown" class="dropdown-toggle" href="#"> Analyzer <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">전체보기</a></li>
+                  <li><a href="#">오늘의 추천종목</a></li>
+                  <li><a href="#">오늘의 이탈종목</a></li>
+                </ul>
+              </li>
+            </ul
+          </div>
+        </nav>
+        <a data-target=".nav-collapse" data-toggle="collapse" class="btn_menu">
+          <span class="icon-align-justify icon-white"></span>
+        </a>
+
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- main content -->
+<div id="contentwrapper">
+
+  <div class="main_content">
+
+    <%= yield %>
+
+  </div>
 </div>
-<%= yield %>
-<div>
-  Footer
+
+<script src="js/jquery.min.js"></script>
+<!-- smart resize event -->
+<script src="js/jquery.debouncedresize.min.js"></script>
+<!-- hidden elements width/height -->
+<script src="js/jquery.actual.min.js"></script>
+<!-- js cookie plugin -->
+<script src="js/jquery.cookie.min.js"></script>
+<!-- main bootstrap js -->
+<script src="js/bootstrap.min.js"></script>
+<!-- bootstrap plugins -->
+<script src="js/bootstrap.plugins.min.js"></script>
+<!-- jBreadcrumbs -->
+<script src="js/jquery.jBreadCrumb.1.1.min.js"></script>
+<!-- fix for ios orientation change -->
+<script src="js/ios-orientationchange-fix.js"></script>
+<!-- scrollbar -->
+<script src="js/antiscroll.js"></script>
+<script src="js/jquery-mousewheel.js"></script>
+<!-- to top -->
+<script src="js/jquery.ui.totop.min.js"></script>
+<!-- common functions -->
+<script src="js/gebo_common.js"></script>
+
+<script src="js/jquery-ui-1.8.23.custom.min.js"></script>
+
+<script src="js/highstock.js"></script>
+<script src="js/modules/exporting.js"></script>
+<script>
+    $(document).ready(function() {
+        //* show all elements & remove preloader
+        setTimeout('$("html").removeClass("js")',100);
+    });
+</script>
 </div>
 </body>
 </html>
