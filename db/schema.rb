@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -11,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121119032328) do
+ActiveRecord::Schema.define(:version => 20121120125212) do
 
   create_table "asset_accounts", :force => true do |t|
     t.integer  "base_asset"
@@ -50,6 +49,8 @@ ActiveRecord::Schema.define(:version => 20121119032328) do
   add_index "day_candles", ["date", "symbol"], :name => "index_day_candles_on_date_and_symbol", :unique => true
   add_index "day_candles", ["symbol"], :name => "day_candles_symbol_fk"
   add_index "day_candles", ["trading_date", "symbol"], :name => "index_day_candles_on_trading_date_and_symbol", :unique => true
+  add_index "day_candles", ["trading_date"], :name => "index_day_candles_on_trading_date"
+  add_index "day_candles", ["trading_date"], :name => "trading_date"
 
   create_table "firm_daily_data", :force => true do |t|
     t.float    "per"
@@ -164,6 +165,8 @@ ActiveRecord::Schema.define(:version => 20121119032328) do
     t.integer  "fcf"
   end
 
+  add_index "firm_data", ["date"], :name => "index_firm_data_on_date"
+
   create_table "orders", :force => true do |t|
     t.integer  "number_of_stocks"
     t.integer  "trading_signal_id"
@@ -188,11 +191,6 @@ ActiveRecord::Schema.define(:version => 20121119032328) do
   end
 
   add_index "stock_codes", ["symbol"], :name => "index_stock_codes_on_symbol", :unique => true
-
-  create_table "stock_orders", :force => true do |t|
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
 
   create_table "trading_signals", :force => true do |t|
     t.datetime "entry_date"
