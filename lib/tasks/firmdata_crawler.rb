@@ -351,7 +351,7 @@ def crawl_firmdata ()
       tup = value
       #puts "save #{key} : #{tup[:date]}"
       #puts "#{tup[:date]} #{tup[:interest_coverage_ratio]} \n"
-      puts "save #{key} #{tup[:date]} #{tup.save!}"
+      puts "save #{key} #{tup.save!}"
     }
 
   end
