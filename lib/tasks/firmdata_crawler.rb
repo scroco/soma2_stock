@@ -18,6 +18,7 @@ def crawl_firmdata ()
     #cod = "005930"
     puts cod
 
+    h = nil
     h = Hash.new
 
     puts "재무상태표"
@@ -32,12 +33,16 @@ def crawl_firmdata ()
     #puts docTable
 
     date = get_data(docTable, "thead tr th span")
+    #puts date
     valuelist = get_data(docTable, "tbody tr td")
     #puts valuelist
     valuelist.delete_at(0) #쓰레기 값 제거
 
     for tmp_date in date do
-      h[tmp_date] = FirmDatum.where(:date => Date.strptime(tmp_date, '%Y.%m')).where(:stock_code_id => stock_code).first
+      tup = FirmDatum.where(:date => Date.strptime(tmp_date, '%Y.%m')).where(:stock_code_id => stock_code).first
+      if tup then
+        h[tmp_date] = tup
+      end
     end
 
     cnt=0
@@ -58,14 +63,17 @@ def crawl_firmdata ()
           h[tmp_date] = FirmDatum.new(:stock_code => stock_code)
           tup = h[tmp_date]
           tup[:date] = Date.strptime(tmp_date, '%Y.%m')
+
+          #h[tmp] = FirmDatum.new(:stock_code => stock_code)
+          #tup = h[tmp]
+          #tup[:date] = Date.strptime(tmp, '%Y.%m')
         end
 
+        tup[:date] = Date.strptime(tmp_date, '%Y.%m')
         valuename_translator(tmp_name, strtoint(value), tup)
 
       end
     end
-
-
 
     puts "손익계산서"
     #손익계산서
@@ -112,7 +120,6 @@ def crawl_firmdata ()
       end
     end
 
-
     puts "현금흐름표"
     #현금흐름표
     doc = Nokogiri::HTML(open("http://www.itooza.com/vclub/y10_page.php?cmp_cd=#{cod}&mode=db&ss=10&sv=4&lsmode=1&lkmode=2&accmode=1"))
@@ -156,6 +163,7 @@ def crawl_firmdata ()
       end
 
     end
+
 
     puts "가치평가"
     #가치평가
@@ -250,7 +258,7 @@ def crawl_firmdata ()
         #[tmp_date] = stock_code.build_FirmDatum
         h[tmp] = FirmDatum.new(:stock_code => stock_code)
         tup = h[tmp]
-        tup[:date] = Date.strptime(tmp_date, '%Y.%m')
+        tup[:date] = Date.strptime(tmp, '%Y.%m')
       end
 
       #valuename_translator2(tmp_name, strtoint(value), tup)
@@ -341,9 +349,9 @@ def crawl_firmdata ()
 
     h.each { |key, value|
       tup = value
-      #puts "save #{key} : "
+      #puts "save #{key} : #{tup[:date]}"
       #puts "#{tup[:date]} #{tup[:interest_coverage_ratio]} \n"
-      puts "save #{key} #{tup.save!}"
+      puts "save #{key} #{tup[:date]} #{tup.save!}"
     }
 
   end
