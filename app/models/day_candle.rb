@@ -1,5 +1,5 @@
 class DayCandle < ActiveRecord::Base
-  attr_accessible :symbol, :date, :o, :h, :l, :c, :v
+  attr_accessible :symbol, :date, :o, :h, :l, :c, :v, :trading_date
 
   def self.duplicated? symbol, date
     self.where(:symbol => symbol, :date => date).exists?
