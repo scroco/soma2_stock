@@ -1,0 +1,8 @@
+<ul>
+  <% @signals.each do |signal| %>
+      <li>
+        <%= simple_date_format signal.exit_date %>,
+        <%= simple_date_format signal.entry_date %>
+      </li>
+  <% end %>
+</ul>
