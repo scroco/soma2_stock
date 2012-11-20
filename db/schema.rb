@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121120162721) do
+ActiveRecord::Schema.define(:version => 20121120180432) do
 
   create_table "asset_accounts", :force => true do |t|
     t.integer  "base_asset"
@@ -215,12 +215,11 @@ ActiveRecord::Schema.define(:version => 20121120162721) do
 
   create_table "trading_strategies", :force => true do |t|
     t.string   "name"
-    t.string   "strategy"
+    t.text     "strategy"
     t.datetime "start_date"
     t.datetime "end_date"
-    t.datetime "tested_date"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
 end
