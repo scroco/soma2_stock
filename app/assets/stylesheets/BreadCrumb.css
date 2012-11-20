@@ -15,10 +15,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 -ms-border-radius: 4px;
 border-radius: 4px;}
 .breadCrumb ul{height:21px;display:block;margin:0;padding:0 0 0 6px}
-.breadCrumb ul li{display:block;float:left;position:relative;height:21px;overflow:hidden;line-height:21px;font-size:.9167em;background:url(../Images/ChevronOverlay.png) no-repeat 100% 0;margin:0 6px 0 0;padding:0 10px 0 0}
+.breadCrumb ul li{display:block;float:left;position:relative;height:21px;overflow:hidden;line-height:21px;font-size:.9167em;background:url(../img/ChevronOverlay.png) no-repeat 100% 0;margin:0 6px 0 0;padding:0 10px 0 0}
 .breadCrumb ul li div.chevronOverlay{position:absolute;right:0;top:0;z-index:2}
 .breadCrumb ul li span{display:block;overflow:hidden}
 .breadCrumb ul li a{display:block;position:relative;height:21px;line-height:21px;overflow:hidden;float:left}
 .breadCrumb ul li.first {padding-right:12px;opacity:0.6}
 .breadCrumb ul li.last{background:none;margin-right:0;padding-right:0}
-.chevronOverlay{display:none;background:url(../Images/ChevronOverlay.png) no-repeat 100% 0;width:13px;height:20px}
+.chevronOverlay{display:none;background:url(../img/ChevronOverlay.png) no-repeat 100% 0;width:13px;height:20px}

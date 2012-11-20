@@ -51,9 +51,12 @@ ActiveRecord::Schema.define(:version => 20121120180432) do
   end
 
   add_index "day_candles", ["date", "symbol"], :name => "index_day_candles_on_date_and_symbol", :unique => true
+  add_index "day_candles", ["firm_daily_datum_id"], :name => "firm_daily_datum_id"
   add_index "day_candles", ["firm_daily_datum_id"], :name => "index_day_candles_on_firm_daily_datum_id"
+  add_index "day_candles", ["symbol"], :name => "day_candles_symbol_fk"
   add_index "day_candles", ["trading_date", "symbol"], :name => "index_day_candles_on_trading_date_and_symbol", :unique => true
   add_index "day_candles", ["trading_date"], :name => "index_day_candles_on_trading_date"
+  add_index "day_candles", ["trading_date"], :name => "trading_date"
 
   create_table "firm_daily_data", :force => true do |t|
     t.float    "per"
@@ -170,6 +173,7 @@ ActiveRecord::Schema.define(:version => 20121120180432) do
 
   add_index "firm_data", ["date"], :name => "index_firm_data_on_date"
   add_index "firm_data", ["stock_code_id"], :name => "index_firm_data_on_stock_code_id"
+  add_index "firm_data", ["stock_code_id"], :name => "stock_code_id"
 
   create_table "orders", :force => true do |t|
     t.integer  "number_of_stocks"
@@ -222,5 +226,7 @@ ActiveRecord::Schema.define(:version => 20121120180432) do
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
+
+  add_foreign_key "day_candles", "stock_codes", :name => "day_candles_symbol_fk", :column => "symbol", :primary_key => "symbol"
 
 end

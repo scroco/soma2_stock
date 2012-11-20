@@ -97,7 +97,7 @@ end
 def firm_data_calculator
   #puts(DayCandle.where("firm_daily_datum_id is null and trading_date >= ?", Time.utc(2002,12,31)).to_sql)
 
-  DayCandle.where("firm_daily_datum_id is null and trading_date >= ?", Time.utc(2002,12,31)).find_each do |day_candle|
+  DayCandle.where("firm_daily_datum_id is null and trading_date >= ?", Time.utc(2002,12,31)).find_each(:batch_size => 5000) do |day_candle|
 
     #date = day_candle["date"][0,4] << "-" << day_candle["date"][4,2] << "-" << day_candle["date"][6,2]
     date = day_candle["trading_date"]
