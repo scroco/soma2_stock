@@ -1,0 +1,45 @@
+<div class="row-fluid">
+  <div class="span12">
+    <h4 class="heading">벤자민 그레이엄</h4>
+    <table class="table table-striped" data-provides="rowlink">
+      <thead>
+      <tr>
+        <th>자산 전략 이름</th>
+        <th>종목이름</th>
+        <th>종목코드</th>
+        <th>진입일</th>
+        <th>진입금액</th>
+        <th>이탈일</th>
+        <th>이탈금액</th>
+        <th>수익률(세후)</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @orders.each do |order| %>
+      <tr>
+        <td><%= order['asset_strategy_name'] %></td>
+        <td><%= order['stock_code_name'] %></td>
+        <td><%= link_to(order['stock_code_symbol'],firm_path(order['stock_code_symbol'])) %></td>
+        <td><%= order['entry_date'] %></td>
+        <td><%= order['entry_market_price'] %></td>
+        <td><%= order['exit_date'] %></td>
+        <td><%= order['exit_market_price'] %></td>
+        <% earning_ratio = (order['exit_market_price'].to_f - order['entry_market_price'].to_f) / order['entry_market_price'].to_f
+           if earning_ratio > 0
+             spanclass = "high"
+             iclass = "icon-arrow-up"
+           else
+             spanclass = "low"
+             iclass = "icon-arrow-down"
+           end
+        %>
+            <td><span class="<%= spanclass %>"><i class="<%= iclass %>"></i><%= earning_ratio.round(3) %>%</span></td>
+      </tr>
+
+      <% end %>
+  </div>
+</div>
+
+
+
+
