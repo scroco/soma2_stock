@@ -24,7 +24,7 @@
         <td><%= order['entry_market_price'] %></td>
         <td><%= order['exit_date'] %></td>
         <td><%= order['exit_market_price'] %></td>
-        <% earning_ratio = (order['exit_market_price'].to_f - order['entry_market_price'].to_f) / order['entry_market_price'].to_f
+        <% earning_ratio = (order['exit_market_price'].to_f - order['entry_market_price'].to_f) / order['entry_market_price'].to_f * 100
            if earning_ratio > 0
              spanclass = "high"
              iclass = "icon-arrow-up"
