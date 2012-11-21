@@ -22,13 +22,14 @@
         <div class="span3">
           <h4 class="heading">투자정보</h4>
           <dl class="dl-summary">
-            <dt>회사 이름</dt>
-            <dd>LG디스플레이</dd>
+            <dt>종목이름</dt>
+            <dd><%= @stock_code.name %></dd>
+            <dt>주당순이익</dt>
+            <dd><%= @firm_data.eps %></dd>
             <dt>PER</dt>
-            <dd>16배</dd>
-            <dd>2012년기준</dd>
-            <dt>매출</dt>
-            <dd>10조</dd>
+            <dd><%= @firm_data.per %></dd>
+            <dt>주당매출액</dt>
+            <dd><%= @firm_data.sps %></dd>
           </dl>
         </div>
       </div>
@@ -117,7 +118,7 @@
 
             }
         });
-        $.getJSON('http://localhost:3000/day_candles/005930.json', function(data) {
+        $.getJSON('/daily_stocks/<%= @symbol %>.json', function(data) {
 
             // Create the chart
             chart1 = new Highcharts.StockChart({
@@ -187,7 +188,7 @@
         //$('#_tab3').click(function () {
 
 
-        $.getJSON('http://www.highcharts.com/samples/data/jsonp.php?filename=aapl-ohlc.json&callback=?', function(data) {
+        $.getJSON('/day_candles/<%= @symbol %>.json', function(data) {
 
             // create the chart
             var chart2 = new Highcharts.StockChart({

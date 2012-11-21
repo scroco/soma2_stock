@@ -16,9 +16,4 @@ class DayCandle < ActiveRecord::Base
     [Time.parse(self.date).utc.to_i*1000, self.o, self.h, self.l, self.c]
 
   end
-
-  def as_json (options={})
-    [Time.parse(self.date).utc.to_i*1000, self.c]
-
-  end
 end

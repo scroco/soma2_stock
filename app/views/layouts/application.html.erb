@@ -69,8 +69,8 @@
     <div class="navbar-inner">
       <div class="container-fluid">
         <a class="brand" href="/">stock analyzer</a>
-        <form action="/firms/"class="navbar-search pull-left">
-          <input type="text" class="search-query" placeholder="종목검색">
+        <form action="<%= firms_path %>" class="navbar-search pull-left">
+          <input type="text" name="id" class="search-query" placeholder="종목검색">
         </form>
         <nav>
           <div class="nav-collapse pull-right">
