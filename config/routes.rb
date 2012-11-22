@@ -6,6 +6,8 @@ Stock2::Application.routes.draw do
   resources :day_candles
   resources :orders
   resources :daily_stocks
+  resources :stock_codes
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

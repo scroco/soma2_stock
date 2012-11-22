@@ -1,0 +1,22 @@
+<h1>Stock Codes</h1>
+
+<table style="width: 100%; text-align: center;">
+  <tr>
+    <th>이름</th>
+    <th>영문이름</th>
+    <th>종목코드</th>
+    <th>삭제</th>
+  </tr>
+
+  <% @stock_codes.each do |stock_code| %>
+      <tr>
+        <td><%= stock_code.name %></td>
+        <td><%= stock_code.eng_name %></td>
+        <td><%= stock_code.symbol %></td>
+        <td><input type="checkbox" name="will_delete" /></td>
+      </tr>
+  <% end %>
+</table>
+
+<br />
+
