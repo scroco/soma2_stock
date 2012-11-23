@@ -1,5 +1,6 @@
 <h1>Stock Codes</h1>
 
+<%= form_tag destroy_multiple_stock_codes_path, :method => :delete do %>
 <table style="width: 100%; text-align: center;">
   <tr>
     <th>이름</th>
@@ -13,10 +14,11 @@
         <td><%= stock_code.name %></td>
         <td><%= stock_code.eng_name %></td>
         <td><%= stock_code.symbol %></td>
-        <td><input type="checkbox" name="will_delete" /></td>
+        <td><%= check_box_tag "stock_code_ids[]", stock_code.id %></td>
       </tr>
   <% end %>
 </table>
-
+<%= submit_tag "체크된 항목들 제거" %>
+<% end %>
 <br />
 
